@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
-    <!-- FIREBASE SDK (Versi 8 - Stabil untuk HTML biasa) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
@@ -37,7 +36,6 @@
 </head>
 <body>
 
-    <!-- 1. LOGIN SCREEN -->
     <div id="login-screen" class="login-wrap">
         <div class="glass-box">
             <h1 style="color:var(--accent); font-weight:800; font-size: 3rem;">Nebulo</h1>
@@ -49,7 +47,6 @@
         </div>
     </div>
 
-    <!-- 2. DASHBOARD UTAMA (Disembunyikan sebelum login) -->
     <div id="main-app" class="hidden" style="flex:1; display:flex; flex-direction:column;">
         
         <nav class="navbar navbar-dark sticky-top">
@@ -64,7 +61,6 @@
 
         <div class="container mt-4 mb-5" style="flex: 1;">
             
-            <!-- Sensor Utama & Kontrol -->
             <div class="row g-4 mb-4">
                 <div class="col-md-5">
                     <div class="my-card d-flex justify-content-around align-items-center text-center">
@@ -89,16 +85,13 @@
                 </div>
             </div>
 
-            <!-- Bagian Tanaman -->
             <div class="d-flex align-items-center mb-3">
                 <h5 class="m-0 me-3 text-white">Pilih Tanaman:</h5>
                 <ul class="nav nav-pills plant-nav" id="plantTabs">
-                    <!-- Tab akan dibuat otomatis oleh Script di bawah -->
                     <li class="nav-item"><button class="nav-link active">Loading...</button></li>
                 </ul>
             </div>
 
-            <!-- Area Detail Tanaman & Grafik -->
             <div id="plantContentArea">
                 <div class="my-card text-center text-muted">Menunggu data dari Firebase...</div>
             </div>
@@ -110,9 +103,8 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- 1. KONFIGURASI FIREBASE (INI DATA KAMU) ---
+        // --- 1. KONFIGURASI FIREBASE (SUDAH DIPERBAIKI SESUAI DATA KAMU) ---
         const firebaseConfig = {
           apiKey: "AIzaSyAlpvH2xthL3jYVvP9xO7UVDMo9T-Cahyc",
           authDomain: "nebulo-iot.firebaseapp.com",
@@ -127,7 +119,7 @@
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
 
-        // --- 2. LOGIKA LOGIN SIMPEL ---
+        // --- 2. LOGIKA LOGIN ---
         function checkLogin() {
             if(localStorage.getItem('nebulo_login') === 'true') {
                 document.getElementById('login-screen').classList.add('hidden');
@@ -151,10 +143,9 @@
             location.reload();
         }
 
-        // Jalankan cek login saat website dibuka
         checkLogin();
 
-        // --- 3. DATA & LOGIKA TANAMAN ---
+        // --- 3. LOGIKA IOT ---
         let plantsData = [
             { id: 1, name: 'Sereh', slot: 'w1', min: 60, desc: 'Butuh Banyak Air' },
             { id: 2, name: 'Jahe', slot: 'w2', min: 30, desc: 'Hemat Air' }
@@ -162,23 +153,20 @@
         let activePlantIndex = 0;
 
         function startApp() {
-            // A. DENGARKAN DATA SENSOR (Suhu, Humid, Tanah)
+            // A. Ambil Data Sensor
             db.ref('sensor_logs').limitToLast(1).on('value', (snap) => {
                 const data = snap.val();
                 if(data) {
                     const key = Object.keys(data)[0];
                     const last = data[key];
                     
-                    // Update Suhu & Udara
                     document.getElementById('val-temp').innerText = last.temp || 0;
                     document.getElementById('val-humid').innerText = last.humid || 0;
-                    
-                    // Update tampilan tanaman saat ini
                     renderPlantContent(last);
                 }
             });
 
-            // B. DENGARKAN STATUS POMPA & MODE
+            // B. Ambil Status Pompa
             db.ref('settings').on('value', (snap) => {
                 const s = snap.val() || {};
                 const mode = s.control_mode || 'MANUAL';
@@ -187,17 +175,14 @@
                 document.getElementById('label-mode').innerText = mode;
                 document.getElementById('label-pump').innerText = pump;
                 
-                // Ubah warna badge status
                 const pumpBadge = document.getElementById('label-pump');
                 pumpBadge.className = (pump === 'ON') ? "badge bg-success ms-1" : "badge bg-danger ms-1";
             });
 
-            // Generate Tab dan Grafik Awal
             renderTabs();
             initChart(plantsData[0].slot);
         }
 
-        // Fungsi Membuat Tombol Tab Tanaman
         function renderTabs() {
             const ul = document.getElementById('plantTabs');
             ul.innerHTML = '';
@@ -207,26 +192,18 @@
             });
         }
         
-        // Fungsi Ganti Tab
         function switchTab(index) {
             activePlantIndex = index;
-            // Update warna tombol tab
             document.querySelectorAll('.plant-nav .nav-link').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-tab-${index}`).classList.add('active');
             
-            // Ambil data terakhir sekali untuk update tampilan instan
             db.ref('sensor_logs').limitToLast(1).once('value').then(snap => {
                 const data = snap.val();
-                if(data) { 
-                    const key = Object.keys(data)[0]; 
-                    renderPlantContent(data[key]); 
-                }
+                if(data) { const key = Object.keys(data)[0]; renderPlantContent(data[key]); }
             });
-            // Update Grafik sesuai tanaman
             initChart(plantsData[index].slot);
         }
 
-        // Fungsi Menampilkan Detail Tanaman
         function renderPlantContent(sensorData) {
             const p = plantsData[activePlantIndex];
             const val = sensorData[p.slot] || 0;
@@ -257,38 +234,26 @@
             document.getElementById('plantContentArea').innerHTML = html;
         }
 
-        // Fungsi Kontrol Tombol (Kirim ke Firebase)
-        function setMode(mode) { 
-            db.ref('settings').update({ control_mode: mode }); 
-        }
-        function setPump(status) { 
-            db.ref('settings').update({ control_mode: 'MANUAL', pump_status: status }); 
-        }
+        function setMode(mode) { db.ref('settings').update({ control_mode: mode }); }
+        function setPump(status) { db.ref('settings').update({ control_mode: 'MANUAL', pump_status: status }); }
 
-        // Fungsi Grafik (Chart.js)
         function initChart(slotKey) {
-            // Tunggu elemen canvas muncul
             setTimeout(() => {
                 const ctx = document.getElementById('mainChart');
                 if(!ctx) return;
                 
-                // Ambil 20 data terakhir
                 db.ref('sensor_logs').limitToLast(20).once('value', (snap) => {
                     const raw = snap.val();
                     if(!raw) return;
                     
-                    const labels = []; 
-                    const dataPoints = [];
-                    
+                    const labels = []; const dataPoints = [];
                     Object.keys(raw).forEach(k => {
                         const r = raw[k]; 
-                        // Ambil jam saja (format HH:MM)
                         let timeLabel = r.timestamp ? r.timestamp.substring(11, 16) : "now"; 
                         labels.push(timeLabel); 
                         dataPoints.push(r[slotKey]);
                     });
                     
-                    // Gambar Grafik
                     new Chart(ctx, {
                         type: 'line',
                         data: {
@@ -298,20 +263,13 @@
                                 data: dataPoints, 
                                 borderColor: '#00e676', 
                                 backgroundColor: 'rgba(0, 230, 118, 0.1)', 
-                                borderWidth: 2, 
-                                fill: true, 
-                                tension: 0.4 
+                                borderWidth: 2, fill: true, tension: 0.4 
                             }]
                         },
                         options: { 
-                            responsive: true, 
-                            maintainAspectRatio: false, 
-                            scales: { 
-                                y: { grid: { color: '#333' }, max: 100 }, 
-                                x: { display: false } 
-                            }, 
-                            plugins: { legend: { display: false } }, 
-                            animation: false 
+                            responsive: true, maintainAspectRatio: false, 
+                            scales: { y: { grid: { color: '#333' }, max: 100 }, x: { display: false } }, 
+                            plugins: { legend: { display: false } }, animation: false 
                         }
                     });
                 });
