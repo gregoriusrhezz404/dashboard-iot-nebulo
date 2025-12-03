@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nebulo IoT - Monitoring Suhu dan Kelembaban Tanah</title>
+    <title>Nebulo IoT - Monitoring Suhu dan Kelembaban</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,25 +13,76 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
     <style>
+        /* --- 1. DEFINISI WARNA (CSS VARIABLES) --- */
         :root {
-            --accent: #00e676;      
-            --bg: #121212;          
-            --card: #1e1e1e;        
-            --text: #ffffff;        
+            /* Tema Gelap (Default) */
+            --accent: #00e676;       
+            --bg: #121212;           
+            --card: #1e1e1e;         
+            --text: #ffffff;         
             --text-muted: #b0b0b0;  
-            --border: #333333;      
-            --input-bg: #2d2d2d;    
+            --border: #333333;       
+            --input-bg: #2d2d2d;
+            --navbar-bg: #000000;
         }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
-        .navbar { background: #000000; border-bottom: 2px solid var(--accent); }
+
+        /* Tema Terang (Light Mode) - Akan aktif jika class .light-mode ditambahkan ke body */
+        body.light-mode {
+            --accent: #00a152;       /* Hijau lebih gelap agar terbaca di putih */
+            --bg: #f4f6f8;           /* Abu-abu sangat muda */
+            --card: #ffffff;         /* Putih bersih */
+            --text: #333333;         /* Hitam lembut */
+            --text-muted: #666666;   
+            --border: #ddd;          
+            --input-bg: #ffffff;     
+            --navbar-bg: #ffffff;
+        }
+
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: 'Segoe UI', sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            transition: background 0.3s, color 0.3s; /* Efek transisi halus saat ganti tema */
+        }
+
+        .navbar { background: var(--navbar-bg); border-bottom: 2px solid var(--accent); transition: background 0.3s; }
         .navbar-brand { color: var(--accent) !important; font-weight: bold; font-size: 24px; }
-        .my-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.5); color: var(--text); }
-        .form-control { background-color: var(--input-bg) !important; color: #ffffff !important; border: 1px solid var(--border) !important; }
+        
+        .my-card { 
+            background: var(--card); 
+            border: 1px solid var(--border); 
+            border-radius: 10px; 
+            padding: 20px; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            color: var(--text); 
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        /* Perbaikan Form Input agar tulisan jelas */
+        .form-control { 
+            background-color: var(--input-bg) !important; 
+            color: var(--text) !important; 
+            border: 1px solid var(--border) !important; 
+        }
+        .form-control::placeholder { color: var(--text-muted); opacity: 0.7; }
+        .form-control:focus {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 0.25rem rgba(0, 230, 118, 0.25);
+        }
+
         .plant-nav .nav-link { color: var(--text-muted); border: 1px solid var(--border); margin-right: 10px; border-radius: 20px; cursor: pointer; }
-        .plant-nav .nav-link.active { background: var(--accent); color: #000; font-weight: bold; border-color: var(--accent); }
-        .login-wrap { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 9999; background: #000; display: flex; align-items: center; justify-content: center; }
-        .glass-box { background: rgba(20, 20, 20, 0.9); border: 1px solid var(--accent); padding: 40px; border-radius: 15px; width: 100%; max-width: 400px; text-align: center; }
+        .plant-nav .nav-link.active { background: var(--accent); color: #fff; font-weight: bold; border-color: var(--accent); }
+        
+        .login-wrap { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 9999; background: var(--bg); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .glass-box { background: var(--card); border: 1px solid var(--accent); padding: 40px; border-radius: 15px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .hidden { display: none !important; }
+
+        /* Tombol Toggle Tema */
+        .theme-toggle { cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 5px 12px; border-radius: 20px; font-size: 14px; }
+        .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
     </style>
 </head>
 <body>
@@ -39,21 +90,28 @@
     <div id="login-screen" class="login-wrap">
         <div class="glass-box">
             <h1 style="color:var(--accent); font-weight:800; font-size: 3rem;">Nebulo</h1>
-            <p class="text-muted mb-4">SISTEM IOT SERVERLESS</p>
-            <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Email (bebas)" value="admin@nebulo.id">
-            <input type="password" id="input-pass" class="form-control mb-4 text-center" placeholder="Password (isi: 12345)">
-            <button onclick="handleLogin()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color:black; border:none;">MASUK <i class="fas fa-arrow-right ms-2"></i></button>
-            <p id="login-error" class="text-danger mt-3 small hidden">Password Salah!</p>
+            <p style="color:var(--text-muted);" class="mb-4">SISTEM IOT SERVERLESS</p>
+            
+            <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Masukkan Email Anda">
+            
+            <input type="password" id="input-pass" class="form-control mb-4 text-center" placeholder="Masukkan Password">
+            
+            <button onclick="handleLogin()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK <i class="fas fa-arrow-right ms-2"></i></button>
+            <p id="login-error" class="text-danger mt-3 small hidden">Login Gagal!</p>
         </div>
     </div>
 
     <div id="main-app" class="hidden" style="flex:1; display:flex; flex-direction:column;">
         
         <nav class="navbar navbar-dark sticky-top">
-            <div class="container">
-                <div class="navbar-brand">Nebulo <span style="font-size:12px; color:#888;">CLOUDFLARE</span></div>
-                <div>
-                    <span class="me-3 text-muted d-none d-md-inline">User: <b class="text-white">Admin</b></span>
+            <div class="container d-flex justify-content-between">
+                <div class="navbar-brand">Nebulo <span style="font-size:12px; color:var(--text-muted);">IoT</span></div>
+                <div class="d-flex align-items-center gap-2">
+                    <button onclick="toggleTheme()" class="theme-toggle" title="Ganti Mode Terang/Gelap">
+                        <i class="fas fa-adjust me-1"></i> Tema
+                    </button>
+                    
+                    <span class="me-2 d-none d-md-inline" style="color:var(--text-muted); border-left: 1px solid var(--border); padding-left:10px; margin-left:5px;">User: <b style="color:var(--text)">Admin</b></span>
                     <button onclick="handleLogout()" class="btn btn-sm btn-outline-danger rounded-pill px-3">Logout</button>
                 </div>
             </div>
@@ -64,17 +122,17 @@
             <div class="row g-4 mb-4">
                 <div class="col-md-5">
                     <div class="my-card d-flex justify-content-around align-items-center text-center">
-                        <div><h6 class="text-muted">SUHU</h6><div class="h2 text-warning"><span id="val-temp">--</span>°C</div></div>
-                        <div style="border-left:1px solid #333; height:50px;"></div>
-                        <div><h6 class="text-muted">UDARA</h6><div class="h2 text-info"><span id="val-humid">--</span>%</div></div>
+                        <div><h6 style="color:var(--text-muted)">SUHU</h6><div class="h2 text-warning"><span id="val-temp">--</span>°C</div></div>
+                        <div style="border-left:1px solid var(--border); height:50px;"></div>
+                        <div><h6 style="color:var(--text-muted)">UDARA</h6><div class="h2 text-info"><span id="val-humid">--</span>%</div></div>
                     </div>
                 </div>
                 <div class="col-md-7">
                     <div class="my-card d-flex align-items-center justify-content-between p-3">
                         <div>
-                            <h6 class="text-muted mb-1">POMPA UTAMA</h6>
+                            <h6 style="color:var(--text-muted)" class="mb-1">POMPA UTAMA</h6>
                             <span id="label-mode" class="badge bg-secondary">--</span>
-                            <span id="label-pump" class="badge bg-danger ms-1" style="color:black;">--</span>
+                            <span id="label-pump" class="badge bg-danger ms-1" style="color:white;">--</span>
                         </div>
                         <div class="btn-group">
                             <button onclick="setMode('AUTO')" class="btn btn-sm btn-outline-info">AUTO</button>
@@ -86,23 +144,24 @@
             </div>
 
             <div class="d-flex align-items-center mb-3">
-                <h5 class="m-0 me-3 text-white">Pilih Tanaman:</h5>
+                <h5 class="m-0 me-3" style="color:var(--text)">Pilih Tanaman:</h5>
                 <ul class="nav nav-pills plant-nav" id="plantTabs">
                     <li class="nav-item"><button class="nav-link active">Loading...</button></li>
                 </ul>
             </div>
 
             <div id="plantContentArea">
-                <div class="my-card text-center text-muted">Menunggu data dari Firebase...</div>
+                <div class="my-card text-center" style="color:var(--text-muted)">Menunggu data dari Firebase...</div>
             </div>
 
         </div>
         
-        <div class="main-footer" style="background:#000; padding:20px; text-align:center; border-top:1px solid #333;">
-            <p class="small text-muted mb-0">Nebulo IoT - Hosted on Cloudflare Pages</p>
+        <div class="main-footer" style="background:var(--navbar-bg); padding:20px; text-align:center; border-top:1px solid var(--border);">
+            <p class="small mb-0" style="color:var(--text-muted)">Nebulo IoT - Hosted on Cloudflare Pages</p>
         </div>
     </div>
-<script>
+
+    <script>
         // --- 1. KONFIGURASI FIREBASE ---
         const firebaseConfig = {
           apiKey: "AIzaSyAlpvH2xthL3jYVvP9xO7UVDMo9T-Cahyc",
@@ -114,21 +173,31 @@
           appId: "1:571257536216:web:1362145abec2190a06e1ad"
         };
 
-        // Inisialisasi Firebase
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
-        const auth = firebase.auth(); // Mengaktifkan fitur Login
+        const auth = firebase.auth();
 
-        // --- 2. LOGIKA KEAMANAN (Cek Status Login) ---
+        // --- 2. LOGIKA TEMA (LIGHT/DARK MODE) ---
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            // Simpan pilihan user agar tidak reset saat refresh
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('nebulo_theme', isLight ? 'light' : 'dark');
+        }
+
+        // Cek tema terakhir yang disimpan user saat halaman dibuka
+        const savedTheme = localStorage.getItem('nebulo_theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-mode');
+        }
+
+        // --- 3. LOGIKA AUTHENTICATION ---
         auth.onAuthStateChanged((user) => {
             if (user) {
-                // Jika user berhasil login
-                console.log("Login sukses sebagai:", user.email);
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
                 startApp();
             } else {
-                // Jika belum login / logout
                 document.getElementById('login-screen').classList.remove('hidden');
                 document.getElementById('main-app').classList.add('hidden');
             }
@@ -140,18 +209,14 @@
             const errorText = document.getElementById('login-error');
             const btn = document.querySelector('button[onclick="handleLogin()"]');
 
-            // Ubah tombol jadi Loading
             btn.innerHTML = "Memproses...";
             btn.disabled = true;
 
-            // Kirim data ke Firebase Auth
             auth.signInWithEmailAndPassword(email, pass)
                 .then((userCredential) => {
-                    // Berhasil! (fungsi onAuthStateChanged akan jalan otomatis)
                     errorText.classList.add('hidden');
                 })
                 .catch((error) => {
-                    // Gagal
                     console.error(error);
                     errorText.innerText = "Gagal: " + error.message;
                     errorText.classList.remove('hidden');
@@ -164,7 +229,7 @@
             auth.signOut().then(() => { location.reload(); });
         }
 
-        // --- 3. LOGIKA IOT ---
+        // --- 4. LOGIKA IOT ---
         let plantsData = [
             { id: 1, name: 'Sereh', slot: 'w1', min: 60, desc: 'Butuh Banyak Air' },
             { id: 2, name: 'Jahe', slot: 'w2', min: 30, desc: 'Hemat Air' }
@@ -173,7 +238,6 @@
         let myChart = null; 
 
         function startApp() {
-            // Ambil Data Sensor
             db.ref('sensor_logs').limitToLast(1).on('value', (snap) => {
                 const data = snap.val();
                 if(data) {
@@ -186,7 +250,6 @@
                 }
             });
 
-            // Ambil Status Pompa
             db.ref('settings').on('value', (snap) => {
                 const s = snap.val() || {};
                 const mode = s.control_mode || 'MANUAL';
@@ -226,13 +289,14 @@
             const p = plantsData[activePlantIndex];
             const val = sensorData[p.slot] || 0;
             const status = val < p.min ? "KERING" : "AMAN";
-            const color = status === "KERING" ? "#ff4444" : "#00e676";
+            const color = status === "KERING" ? "#ff4444" : "#00e676"; // Warna ini akan tetap terang agar terlihat status bahaya/aman
+            
             const html = `
                 <div class="row g-4 fade-in">
                     <div class="col-md-4">
                         <div class="my-card">
                             <h4 style="color:var(--accent)">${p.name}</h4>
-                            <p class="text-muted small mb-3">${p.desc}</p>
+                            <p class="small mb-3" style="color:var(--text-muted)">${p.desc}</p>
                             <div class="text-center py-2 border-bottom border-secondary">
                                 <div style="font-size: 4rem; font-weight: bold; color: ${color}">${val}%</div>
                                 <div class="badge bg-secondary mt-1">Batas Kering: < ${p.min}%</div>
@@ -242,7 +306,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="my-card">
-                            <h5 class="text-muted mb-3">Grafik Real-time (${p.name})</h5>
+                            <h5 class="mb-3" style="color:var(--text-muted)">Grafik Real-time (${p.name})</h5>
                             <div style="height: 320px;"><canvas id="mainChart"></canvas></div>
                         </div>
                     </div>
@@ -268,19 +332,29 @@
                     labels.push(timeLabel); 
                     dataPoints.push(r[slotKey]);
                 });
+                
+                // Mendapatkan warna dari CSS Variable agar grafik ikut berubah warna saat ganti tema
+                const styles = getComputedStyle(document.body);
+                const accentColor = styles.getPropertyValue('--accent').trim();
+                const gridColor = styles.getPropertyValue('--border').trim();
+
                 myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: labels,
                         datasets: [{ 
                             label: 'Kelembaban (%)', data: dataPoints, 
-                            borderColor: '#00e676', backgroundColor: 'rgba(0, 230, 118, 0.1)', 
+                            borderColor: accentColor, 
+                            backgroundColor: accentColor + '20', // Tambah transparansi
                             borderWidth: 2, fill: true, tension: 0.4 
                         }]
                     },
                     options: { 
                         responsive: true, maintainAspectRatio: false, 
-                        scales: { y: { grid: { color: '#333' }, max: 100 }, x: { display: false } }, 
+                        scales: { 
+                            y: { grid: { color: gridColor }, max: 100 }, 
+                            x: { display: false } 
+                        }, 
                         plugins: { legend: { display: false } }, animation: false 
                     }
                 });
@@ -289,6 +363,7 @@
     </script>
 </body>
 </html>
+
 
 
 
