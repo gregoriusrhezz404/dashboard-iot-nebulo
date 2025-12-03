@@ -114,34 +114,55 @@
           appId: "1:571257536216:web:1362145abec2190a06e1ad"
         };
 
+        // Inisialisasi Firebase
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
+        const auth = firebase.auth(); // Mengaktifkan fitur Login
 
-        // --- 2. LOGIKA LOGIN ---
-        function checkLogin() {
-            if(localStorage.getItem('nebulo_login') === 'true') {
+        // --- 2. LOGIKA KEAMANAN (Cek Status Login) ---
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Jika user berhasil login
+                console.log("Login sukses sebagai:", user.email);
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
-                startApp(); 
+                startApp();
+            } else {
+                // Jika belum login / logout
+                document.getElementById('login-screen').classList.remove('hidden');
+                document.getElementById('main-app').classList.add('hidden');
             }
-        }
+        });
 
         function handleLogin() {
-            const p = document.getElementById('input-pass').value;
-            if(p === '12345') { 
-                localStorage.setItem('nebulo_login', 'true');
-                checkLogin();
-            } else {
-                document.getElementById('login-error').classList.remove('hidden');
-            }
+            const email = document.getElementById('input-email').value;
+            const pass = document.getElementById('input-pass').value;
+            const errorText = document.getElementById('login-error');
+            const btn = document.querySelector('button[onclick="handleLogin()"]');
+
+            // Ubah tombol jadi Loading
+            btn.innerHTML = "Memproses...";
+            btn.disabled = true;
+
+            // Kirim data ke Firebase Auth
+            auth.signInWithEmailAndPassword(email, pass)
+                .then((userCredential) => {
+                    // Berhasil! (fungsi onAuthStateChanged akan jalan otomatis)
+                    errorText.classList.add('hidden');
+                })
+                .catch((error) => {
+                    // Gagal
+                    console.error(error);
+                    errorText.innerText = "Gagal: " + error.message;
+                    errorText.classList.remove('hidden');
+                    btn.innerHTML = 'MASUK <i class="fas fa-arrow-right ms-2"></i>';
+                    btn.disabled = false;
+                });
         }
 
         function handleLogout() {
-            localStorage.removeItem('nebulo_login');
-            location.reload();
+            auth.signOut().then(() => { location.reload(); });
         }
-
-        checkLogin();
 
         // --- 3. LOGIKA IOT ---
         let plantsData = [
@@ -149,41 +170,32 @@
             { id: 2, name: 'Jahe', slot: 'w2', min: 30, desc: 'Hemat Air' }
         ]; 
         let activePlantIndex = 0;
-        let myChart = null; // Variable global untuk menyimpan instance chart
+        let myChart = null; 
 
         function startApp() {
-            // A. Ambil Data Sensor (Realtime)
+            // Ambil Data Sensor
             db.ref('sensor_logs').limitToLast(1).on('value', (snap) => {
                 const data = snap.val();
                 if(data) {
                     const key = Object.keys(data)[0];
                     const last = data[key];
-                    
                     document.getElementById('val-temp').innerText = last.temp || 0;
                     document.getElementById('val-humid').innerText = last.humid || 0;
-                    
-                    // Render ulang konten DAN Grafik setiap ada data baru
                     renderPlantContent(last);
-                    // Beri jeda sedikit agar HTML Canvas siap
-                    setTimeout(() => {
-                        initChart(plantsData[activePlantIndex].slot);
-                    }, 100);
+                    setTimeout(() => { initChart(plantsData[activePlantIndex].slot); }, 100);
                 }
             });
 
-            // B. Ambil Status Pompa
+            // Ambil Status Pompa
             db.ref('settings').on('value', (snap) => {
                 const s = snap.val() || {};
                 const mode = s.control_mode || 'MANUAL';
                 const pump = s.pump_status || 'OFF';
-
                 document.getElementById('label-mode').innerText = mode;
                 document.getElementById('label-pump').innerText = pump;
-                
                 const pumpBadge = document.getElementById('label-pump');
                 pumpBadge.className = (pump === 'ON') ? "badge bg-success ms-1" : "badge bg-danger ms-1";
             });
-
             renderTabs();
         }
 
@@ -200,18 +212,12 @@
             activePlantIndex = index;
             document.querySelectorAll('.plant-nav .nav-link').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-tab-${index}`).classList.add('active');
-            
-            // Ambil data terakhir untuk render tampilan awal tab baru
             db.ref('sensor_logs').limitToLast(1).once('value').then(snap => {
                 const data = snap.val();
                 if(data) { 
                     const key = Object.keys(data)[0]; 
                     renderPlantContent(data[key]); 
-                    
-                    // Init chart SETELAH render HTML selesai
-                    setTimeout(() => {
-                        initChart(plantsData[index].slot);
-                    }, 100);
+                    setTimeout(() => { initChart(plantsData[index].slot); }, 100);
                 }
             });
         }
@@ -221,7 +227,6 @@
             const val = sensorData[p.slot] || 0;
             const status = val < p.min ? "KERING" : "AMAN";
             const color = status === "KERING" ? "#ff4444" : "#00e676";
-
             const html = `
                 <div class="row g-4 fade-in">
                     <div class="col-md-4">
@@ -252,34 +257,24 @@
         function initChart(slotKey) {
             const ctx = document.getElementById('mainChart');
             if(!ctx) return;
-            
-            // Hapus chart lama jika ada agar tidak menumpuk (glitch)
-            if(myChart) {
-                myChart.destroy();
-            }
-            
+            if(myChart) { myChart.destroy(); }
             db.ref('sensor_logs').limitToLast(20).once('value', (snap) => {
                 const raw = snap.val();
                 if(!raw) return;
-                
                 const labels = []; const dataPoints = [];
                 Object.keys(raw).forEach(k => {
                     const r = raw[k]; 
-                    // Ambil Jam:Menit saja
                     let timeLabel = r.timestamp ? r.timestamp.substring(11, 16) : "now"; 
                     labels.push(timeLabel); 
                     dataPoints.push(r[slotKey]);
                 });
-                
                 myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
                         labels: labels,
                         datasets: [{ 
-                            label: 'Kelembaban (%)', 
-                            data: dataPoints, 
-                            borderColor: '#00e676', 
-                            backgroundColor: 'rgba(0, 230, 118, 0.1)', 
+                            label: 'Kelembaban (%)', data: dataPoints, 
+                            borderColor: '#00e676', backgroundColor: 'rgba(0, 230, 118, 0.1)', 
                             borderWidth: 2, fill: true, tension: 0.4 
                         }]
                     },
@@ -294,6 +289,7 @@
     </script>
 </body>
 </html>
+
 
 
 
