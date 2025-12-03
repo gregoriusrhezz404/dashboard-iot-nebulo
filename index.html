@@ -102,9 +102,8 @@
             <p class="small text-muted mb-0">Nebulo IoT - Hosted on Cloudflare Pages</p>
         </div>
     </div>
-
-    <script>
-        // --- 1. KONFIGURASI FIREBASE (SUDAH DIPERBAIKI SESUAI DATA KAMU) ---
+<script>
+        // --- 1. KONFIGURASI FIREBASE ---
         const firebaseConfig = {
           apiKey: "AIzaSyAlpvH2xthL3jYVvP9xO7UVDMo9T-Cahyc",
           authDomain: "nebulo-iot.firebaseapp.com",
@@ -115,7 +114,6 @@
           appId: "1:571257536216:web:1362145abec2190a06e1ad"
         };
 
-        // Inisialisasi Firebase
         if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
         const db = firebase.database();
 
@@ -151,9 +149,10 @@
             { id: 2, name: 'Jahe', slot: 'w2', min: 30, desc: 'Hemat Air' }
         ]; 
         let activePlantIndex = 0;
+        let myChart = null; // Variable global untuk menyimpan instance chart
 
         function startApp() {
-            // A. Ambil Data Sensor
+            // A. Ambil Data Sensor (Realtime)
             db.ref('sensor_logs').limitToLast(1).on('value', (snap) => {
                 const data = snap.val();
                 if(data) {
@@ -162,7 +161,13 @@
                     
                     document.getElementById('val-temp').innerText = last.temp || 0;
                     document.getElementById('val-humid').innerText = last.humid || 0;
+                    
+                    // Render ulang konten DAN Grafik setiap ada data baru
                     renderPlantContent(last);
+                    // Beri jeda sedikit agar HTML Canvas siap
+                    setTimeout(() => {
+                        initChart(plantsData[activePlantIndex].slot);
+                    }, 100);
                 }
             });
 
@@ -180,7 +185,6 @@
             });
 
             renderTabs();
-            initChart(plantsData[0].slot);
         }
 
         function renderTabs() {
@@ -197,11 +201,19 @@
             document.querySelectorAll('.plant-nav .nav-link').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-tab-${index}`).classList.add('active');
             
+            // Ambil data terakhir untuk render tampilan awal tab baru
             db.ref('sensor_logs').limitToLast(1).once('value').then(snap => {
                 const data = snap.val();
-                if(data) { const key = Object.keys(data)[0]; renderPlantContent(data[key]); }
+                if(data) { 
+                    const key = Object.keys(data)[0]; 
+                    renderPlantContent(data[key]); 
+                    
+                    // Init chart SETELAH render HTML selesai
+                    setTimeout(() => {
+                        initChart(plantsData[index].slot);
+                    }, 100);
+                }
             });
-            initChart(plantsData[index].slot);
         }
 
         function renderPlantContent(sensorData) {
@@ -238,44 +250,49 @@
         function setPump(status) { db.ref('settings').update({ control_mode: 'MANUAL', pump_status: status }); }
 
         function initChart(slotKey) {
-            setTimeout(() => {
-                const ctx = document.getElementById('mainChart');
-                if(!ctx) return;
+            const ctx = document.getElementById('mainChart');
+            if(!ctx) return;
+            
+            // Hapus chart lama jika ada agar tidak menumpuk (glitch)
+            if(myChart) {
+                myChart.destroy();
+            }
+            
+            db.ref('sensor_logs').limitToLast(20).once('value', (snap) => {
+                const raw = snap.val();
+                if(!raw) return;
                 
-                db.ref('sensor_logs').limitToLast(20).once('value', (snap) => {
-                    const raw = snap.val();
-                    if(!raw) return;
-                    
-                    const labels = []; const dataPoints = [];
-                    Object.keys(raw).forEach(k => {
-                        const r = raw[k]; 
-                        let timeLabel = r.timestamp ? r.timestamp.substring(11, 16) : "now"; 
-                        labels.push(timeLabel); 
-                        dataPoints.push(r[slotKey]);
-                    });
-                    
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [{ 
-                                label: 'Kelembaban (%)', 
-                                data: dataPoints, 
-                                borderColor: '#00e676', 
-                                backgroundColor: 'rgba(0, 230, 118, 0.1)', 
-                                borderWidth: 2, fill: true, tension: 0.4 
-                            }]
-                        },
-                        options: { 
-                            responsive: true, maintainAspectRatio: false, 
-                            scales: { y: { grid: { color: '#333' }, max: 100 }, x: { display: false } }, 
-                            plugins: { legend: { display: false } }, animation: false 
-                        }
-                    });
+                const labels = []; const dataPoints = [];
+                Object.keys(raw).forEach(k => {
+                    const r = raw[k]; 
+                    // Ambil Jam:Menit saja
+                    let timeLabel = r.timestamp ? r.timestamp.substring(11, 16) : "now"; 
+                    labels.push(timeLabel); 
+                    dataPoints.push(r[slotKey]);
                 });
-            }, 100);
+                
+                myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{ 
+                            label: 'Kelembaban (%)', 
+                            data: dataPoints, 
+                            borderColor: '#00e676', 
+                            backgroundColor: 'rgba(0, 230, 118, 0.1)', 
+                            borderWidth: 2, fill: true, tension: 0.4 
+                        }]
+                    },
+                    options: { 
+                        responsive: true, maintainAspectRatio: false, 
+                        scales: { y: { grid: { color: '#333' }, max: 100 }, x: { display: false } }, 
+                        plugins: { legend: { display: false } }, animation: false 
+                    }
+                });
+            });
         }
     </script>
 </body>
 </html>
+
 
