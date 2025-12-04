@@ -1,26 +1,30 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
-    color: white;
-    display: flex;
-    justify-content: center;
-    padding-top: 50px;
-}
-
 .wifi-container {
     width: 100%;
-    max-width: 400px; /* Lebar maksimal seperti HP */
-    background: #1e1e1e;
-    border-radius: 12px;
-    padding: 10px 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    /* Gunakan variabel --card agar warnanya ikut tema (Putih/Hitam) */
+    background: var(--card); 
+    border: 1px solid var(--border);
+    color: var(--text);
+    
+    border-radius: 10px;
+    padding: 15px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Shadow halus */
     overflow: hidden;
+    margin-top: 10px;
+    transition: background 0.3s, border-color 0.3s, color 0.3s;
 }
 
 h3 {
     margin: 10px 0 5px 0;
-    padding-left: 15px;
-    color: #e0e0e0;
+    padding-left: 20px;
+    /* Gunakan variabel --text agar tulisan judul terlihat kontras */
+    color: var(--text); 
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Keterangan kecil di bawah judul */
+.wifi-container p {
+    color: var(--text-muted) !important;
 }
 
 .wifi-list {
@@ -33,14 +37,18 @@ h3 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #333;
+    padding: 15px 20px;
+    /* Garis pemisah antar item menggunakan variabel border */
+    border-bottom: 1px solid var(--border);
     cursor: pointer;
     transition: background 0.2s;
 }
 
+/* Style saat mouse diarahkan ke item wifi */
 .wifi-item:hover {
-    background-color: #333;
+    /* Gunakan warna background input atau sedikit lebih gelap/terang */
+    background-color: var(--bg); 
+    border-left: 4px solid var(--accent); /* Efek visual tambahan */
 }
 
 .wifi-item:last-child {
@@ -50,29 +58,36 @@ h3 {
 .wifi-name {
     font-weight: 600;
     font-size: 16px;
+    color: var(--text);
 }
 
 .wifi-signal {
-    font-size: 12px;
-    color: #888;
+    font-size: 13px;
+    color: var(--text-muted); /* Warna abu-abu yang menyesuaikan tema */
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
+/* Indikator bulat warna sinyal (Tetap warna-warni agar jelas) */
 .signal-icon {
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2); /* Sedikit border biar rapi */
 }
-/* Warna dot sinyal */
-.strong { background-color: #4caf50; box-shadow: 0 0 5px #4caf50;}
+
+/* Warna status sinyal tetap sama di dark/light mode karena warna universal */
+.strong { background-color: #00e676; box-shadow: 0 0 8px rgba(0, 230, 118, 0.4); }
 .medium { background-color: #ff9800; }
 .weak { background-color: #f44336; }
 
 .loading {
     text-align: center;
-    padding: 20px;
-    color: #666;
+    padding: 30px;
+    color: var(--text-muted);
     font-style: italic;
+    background: var(--bg); /* Background loading beda dikit */
+    margin: 10px;
+    border-radius: 8px;
 }
