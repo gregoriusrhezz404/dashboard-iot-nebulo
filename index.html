@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nebulo IoT - Monitoring Suhu dan Kelembaban</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -13,25 +17,24 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
     <style>
+        /* SAYA TETAPKAN STYLE BAWAAN AGAR TEMA NEBULO TIDAK RUSAK */
         /* --- 1. DEFINISI WARNA (CSS VARIABLES) --- */
         :root {
-            /* Tema Gelap (Default) */
-            --accent: #00e676;       
-            --bg: #121212;           
-            --card: #1e1e1e;         
-            --text: #ffffff;         
-            --text-muted: #b0b0b0;  
-            --border: #333333;       
+            --accent: #00e676;        
+            --bg: #121212;            
+            --card: #1e1e1e;          
+            --text: #ffffff;          
+            --text-muted: #b0b0b0;   
+            --border: #333333;        
             --input-bg: #2d2d2d;
             --navbar-bg: #000000;
         }
 
-        /* Tema Terang (Light Mode) - Akan aktif jika class .light-mode ditambahkan ke body */
         body.light-mode {
-            --accent: #00a152;       /* Hijau lebih gelap agar terbaca di putih */
-            --bg: #f4f6f8;           /* Abu-abu sangat muda */
-            --card: #ffffff;         /* Putih bersih */
-            --text: #333333;         /* Hitam lembut */
+            --accent: #00a152;      
+            --bg: #f4f6f8;           
+            --card: #ffffff;         
+            --text: #333333;         
             --text-muted: #666666;   
             --border: #ddd;          
             --input-bg: #ffffff;     
@@ -45,7 +48,7 @@
             display: flex; 
             flex-direction: column; 
             min-height: 100vh; 
-            transition: background 0.3s, color 0.3s; /* Efek transisi halus saat ganti tema */
+            transition: background 0.3s, color 0.3s;
         }
 
         .navbar { background: var(--navbar-bg); border-bottom: 2px solid var(--accent); transition: background 0.3s; }
@@ -61,7 +64,6 @@
             transition: background 0.3s, border-color 0.3s;
         }
 
-        /* Perbaikan Form Input agar tulisan jelas */
         .form-control { 
             background-color: var(--input-bg) !important; 
             color: var(--text) !important; 
@@ -80,7 +82,6 @@
         .glass-box { background: var(--card); border: 1px solid var(--accent); padding: 40px; border-radius: 15px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .hidden { display: none !important; }
 
-        /* Tombol Toggle Tema */
         .theme-toggle { cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 5px 12px; border-radius: 20px; font-size: 14px; }
         .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
     </style>
@@ -93,7 +94,6 @@
             <p style="color:var(--text-muted);" class="mb-4">SISTEM IOT SERVERLESS</p>
             
             <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Masukkan Email Anda">
-            
             <input type="password" id="input-pass" class="form-control mb-4 text-center" placeholder="Masukkan Password">
             
             <button onclick="handleLogin()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK <i class="fas fa-arrow-right ms-2"></i></button>
@@ -154,6 +154,17 @@
                 <div class="my-card text-center" style="color:var(--text-muted)">Menunggu data dari Firebase...</div>
             </div>
 
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="wifi-container">
+                        <h3>📡 Jaringan Tersedia</h3>
+                        <ul id="wifiList" class="wifi-list">
+                            <li class="loading">Menunggu data scan dari ESP32...</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
         
         <div class="main-footer" style="background:var(--navbar-bg); padding:20px; text-align:center; border-top:1px solid var(--border);">
@@ -162,7 +173,7 @@
     </div>
 
     <script>
-        // --- 1. KONFIGURASI FIREBASE ---
+        // --- KONFIGURASI FIREBASE ---
         const firebaseConfig = {
           apiKey: "AIzaSyAlpvH2xthL3jYVvP9xO7UVDMo9T-Cahyc",
           authDomain: "nebulo-iot.firebaseapp.com",
@@ -177,21 +188,19 @@
         const db = firebase.database();
         const auth = firebase.auth();
 
-        // --- 2. LOGIKA TEMA (LIGHT/DARK MODE) ---
+        // --- LOGIKA TEMA ---
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
-            // Simpan pilihan user agar tidak reset saat refresh
             const isLight = document.body.classList.contains('light-mode');
             localStorage.setItem('nebulo_theme', isLight ? 'light' : 'dark');
         }
 
-        // Cek tema terakhir yang disimpan user saat halaman dibuka
         const savedTheme = localStorage.getItem('nebulo_theme');
         if (savedTheme === 'light') {
             document.body.classList.add('light-mode');
         }
 
-        // --- 3. LOGIKA AUTHENTICATION ---
+        // --- LOGIKA AUTHENTICATION ---
         auth.onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById('login-screen').classList.add('hidden');
@@ -229,7 +238,7 @@
             auth.signOut().then(() => { location.reload(); });
         }
 
-        // --- 4. LOGIKA IOT ---
+        // --- LOGIKA IOT (Plants & Chart) ---
         let plantsData = [
             { id: 1, name: 'Sereh', slot: 'w1', min: 60, desc: 'Butuh Banyak Air' },
             { id: 2, name: 'Jahe', slot: 'w2', min: 30, desc: 'Hemat Air' }
@@ -289,7 +298,7 @@
             const p = plantsData[activePlantIndex];
             const val = sensorData[p.slot] || 0;
             const status = val < p.min ? "KERING" : "AMAN";
-            const color = status === "KERING" ? "#ff4444" : "#00e676"; // Warna ini akan tetap terang agar terlihat status bahaya/aman
+            const color = status === "KERING" ? "#ff4444" : "#00e676"; 
             
             const html = `
                 <div class="row g-4 fade-in">
@@ -333,7 +342,6 @@
                     dataPoints.push(r[slotKey]);
                 });
                 
-                // Mendapatkan warna dari CSS Variable agar grafik ikut berubah warna saat ganti tema
                 const styles = getComputedStyle(document.body);
                 const accentColor = styles.getPropertyValue('--accent').trim();
                 const gridColor = styles.getPropertyValue('--border').trim();
@@ -345,7 +353,7 @@
                         datasets: [{ 
                             label: 'Kelembaban (%)', data: dataPoints, 
                             borderColor: accentColor, 
-                            backgroundColor: accentColor + '20', // Tambah transparansi
+                            backgroundColor: accentColor + '20', 
                             borderWidth: 2, fill: true, tension: 0.4 
                         }]
                     },
@@ -361,11 +369,8 @@
             });
         }
     </script>
+
+    <script src="script.js"></script>
+
 </body>
 </html>
-
-
-
-
-
-
