@@ -58,12 +58,17 @@
 
         /* --- 2. STYLE BACKGROUND WALLPAPER --- */
         .bg-wallpaper {
-            /* Menggunakan gambar yang Anda upload sebelumnya */
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                        url('alexandre-debieve1-FO7JIlwjOtU-unsplash (2).jpg');
+            background-color: #121212;
+            /* Menggunakan Link Online Unsplash (Terkompresi) agar cepat */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                              url('alexandre-debieve1-FO7JIlwjOtU-unsplash (2).jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-attachment: scroll; 
+        }
+
+        @media (min-width: 768px) {
+            .bg-wallpaper { background-attachment: fixed; }
         }
 
         /* --- 3. STYLE LANDING PAGE --- */
@@ -76,10 +81,9 @@
         }
 
         .landing-header {
-            padding: 20px;
+            padding: 15px 20px;
             display: flex; justify-content: center; align-items: center; gap: 15px;
-            background: rgba(0, 0, 0, 0.3); 
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.9); 
             border-bottom: 1px solid rgba(255,255,255,0.1);
             position: sticky; top: 0; z-index: 100;
         }
@@ -87,34 +91,34 @@
         .landing-hero {
             flex: 1; 
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 60px 20px;
+            text-align: center; padding: 40px 20px;
             min-height: 80vh; 
         }
 
         .landing-text {
-            font-size: 1.4rem; line-height: 1.6; max-width: 700px; margin-bottom: 50px;
+            font-size: 1.2rem; line-height: 1.6; max-width: 700px; margin-bottom: 40px;
             color: #e0e0e0; font-weight: 300;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
 
         .btn-get-started {
             background: #00e676; color: white; border: none;
             padding: 15px 50px; font-size: 1.2rem; font-weight: bold;
-            border-radius: 50px; box-shadow: 0 0 25px rgba(0, 230, 118, 0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
+            border-radius: 50px; box-shadow: 0 4px 15px rgba(0, 230, 118, 0.4);
+            transition: transform 0.2s;
             text-decoration: none; cursor: pointer;
         }
-        .btn-get-started:hover { transform: scale(1.05); color: white; box-shadow: 0 0 40px rgba(0, 230, 118, 0.7); }
+        .btn-get-started:hover { transform: scale(1.05); color: white; }
 
         .landing-info-section {
-            background-color: #121212;
-            padding: 60px 20px;
+            background-color: #121212; 
+            padding: 50px 20px;
             border-top: 1px solid #333;
         }
 
         .info-card {
             background: rgba(255,255,255,0.05); border: 1px solid #333;
-            border-radius: 15px; padding: 30px; height: 100%;
+            border-radius: 15px; padding: 25px; height: 100%;
         }
 
         /* --- 4. STYLE LOGIN SCREEN --- */
@@ -124,12 +128,11 @@
         }
         
         .glass-box { 
-            background: rgba(30, 30, 30, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(18, 18, 18, 0.95);
             border: 1px solid rgba(0, 230, 118, 0.5); 
-            padding: 40px; border-radius: 15px; width: 100%; max-width: 400px; 
+            padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; 
             text-align: center; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
         }
 
         .hidden { display: none !important; }
@@ -139,8 +142,6 @@
         .form-control { background-color: var(--input-bg) !important; color: var(--text) !important; border: 1px solid var(--border) !important; }
         .theme-toggle { cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 5px 12px; border-radius: 20px; font-size: 14px; }
         .navbar { background: var(--navbar-bg); border-bottom: 2px solid var(--accent); }
-        .navbar-brand { color: var(--accent) !important; font-weight: bold; font-size: 24px; }
-        
         .weather-icon { font-size: 2.5rem; margin-bottom: 10px; }
         .blink-soft { animation: blinker 2s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.6; } }
@@ -149,23 +150,20 @@
 <body>
 
     <div id="landing-page" class="landing-wrap bg-wallpaper">
-        
         <div class="landing-header">
-            <img src="NEBULO_21-removebg-preview.png" alt="Icon" height="50">
-            <img src="NEBULOText21-removebg-preview.png" alt="Text" height="40">
+            <img src="NEBULO_21-removebg-preview.png" alt="Icon" height="40">
+            <img src="NEBULOText21-removebg-preview.png" alt="Text" height="35">
         </div>
 
         <div class="landing-hero animate__animated animate__fadeIn">
             <p class="landing-text">
                 Klik “Get Started” untuk memonitor kelembapan tanah, cuaca, dan mengontrol irigasi tanaman TOGA Anda dari mana saja secara real-time.
             </p>
-            
             <button onclick="goToLogin()" class="btn-get-started animate__animated animate__pulse animate__infinite">
                 GET STARTED <i class="fas fa-arrow-right ms-2"></i>
             </button>
-            
             <div class="mt-5 text-muted small animate__animated animate__fadeInUp animate__delay-1s">
-                <i class="fas fa-chevron-down"></i> Scroll ke bawah untuk Info Tim & Mitra <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-down"></i> Scroll ke bawah untuk Info <i class="fas fa-chevron-down"></i>
             </div>
         </div>
 
@@ -178,20 +176,20 @@
                                 <i class="fas fa-users me-2"></i>Tim Pengembang
                             </h4>
                             <ul style="list-style: none; padding: 0;">
-                                <li class="mb-4">
-                                    <div class="fw-bold" style="color:white; font-size:1.1rem;">Gregorius Rheza Eka Kurniawan</div>
+                                <li class="mb-3">
+                                    <div class="fw-bold" style="color:white;">Gregorius Rheza Eka Kurniawan</div>
                                     <div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.10</div>
                                 </li>
-                                <li class="mb-4">
-                                    <div class="fw-bold" style="color:white; font-size:1.1rem;">Salsabila</div>
+                                <li class="mb-3">
+                                    <div class="fw-bold" style="color:white;">Salsabila</div>
                                     <div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.20</div>
                                 </li>
-                                <li class="mb-4">
-                                    <div class="fw-bold" style="color:white; font-size:1.1rem;">Sri Whyuni</div>
+                                <li class="mb-3">
+                                    <div class="fw-bold" style="color:white;">Sri Whyuni</div>
                                     <div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.21</div>
                                 </li>
                             </ul>
-                            <p class="small mt-4 pt-3 border-top border-secondary" style="color:#b0b0b0; text-align: justify; line-height: 1.5;">
+                            <p class="small mt-3 pt-3 border-top border-secondary" style="color:#b0b0b0; text-align: justify;">
                                 Sistem Irigasi Presisi Tanaman TOGA Berbasis IoT dengan Algoritma Adaptive-Climate dan Web Monitoring Real-Time.
                             </p>
                         </div>
@@ -202,11 +200,8 @@
                             <h4 style="color: #00e676; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; width:100%;">
                                 <i class="fas fa-handshake me-2"></i>Mitra Pengembang
                             </h4>
-                            
-                            <img src="https://web.polines.ac.id/wp-content/uploads/2022/01/Logo-Polines-96dpi-200px.png" alt="Logo Polines" style="height: 100px; margin-bottom: 20px;">
-                            
-                            <h5 class="fw-bold" style="color:white; font-size: 1.3rem;">Politeknik Negeri Semarang</h5>
-                            
+                            <img src="https://web.polines.ac.id/wp-content/uploads/2022/01/Logo-Polines-96dpi-200px.png" alt="Logo Polines" style="height: 80px; margin-bottom: 20px;">
+                            <h5 class="fw-bold" style="color:white;">Politeknik Negeri Semarang</h5>
                             <div class="mt-4">
                                 <a href="mailto:sekretariat@polines.ac.id" style="text-decoration: none; color: #00e676; font-size:1.1rem;">
                                     <i class="fas fa-envelope me-2"></i> sekretariat@polines.ac.id
@@ -220,9 +215,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="text-center mt-5 small" style="color:#666;">
-                    &copy; 2024 Nebulo IoT Project. All rights reserved.
+                    &copy; 2024 Nebulo IoT Project.
                 </div>
             </div>
         </div>
@@ -235,25 +229,37 @@
                 <img src="NEBULOText21-removebg-preview.png" alt="Nebulo Text" style="height: 60px; display: block; margin: 0 auto;">
             </div>
             
-            <h5 class="mb-4" style="color: #ffffff;">Login Admin</h5>
+            <h5 id="form-title" class="mb-4" style="color: #ffffff;">Login Admin</h5>
 
             <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Masukkan Email Anda">
-            <input type="password" id="input-pass" class="form-control mb-4 text-center" placeholder="Masukkan Password">
+            <input type="password" id="input-pass" class="form-control mb-3 text-center" placeholder="Masukkan Password">
             
-            <button onclick="handleLogin()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK DASHBOARD</button>
+            <div id="secret-code-area" class="hidden">
+                <input type="text" id="input-code" class="form-control mb-3 text-center" placeholder="Kode Akses Tim" style="border-color: var(--accent);">
+                <small class="text-muted d-block mb-3">*Minta kode ke Ketua Tim</small>
+            </div>
+            
+            <button id="btn-action" onclick="handleAuth()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK DASHBOARD</button>
+            
+            <div class="mt-3">
+                <span id="text-switch" style="color: #b0b0b0; font-size: 0.9rem;">Belum punya akun?</span>
+                <button onclick="toggleAuthMode()" class="btn btn-sm btn-link p-0 ms-1" style="color: var(--accent); text-decoration: none; font-weight: bold;">
+                    <span id="btn-switch-text">Daftar</span>
+                </button>
+            </div>
+
             <button onclick="backToHome()" class="btn btn-sm btn-link mt-3" style="color: #cccccc; text-decoration: none;">&larr; Kembali</button>
-            <p id="login-error" class="text-danger mt-3 small hidden">Login Gagal!</p>
+            <p id="login-error" class="text-danger mt-3 small hidden">Gagal!</p>
         </div>
     </div>
 
     <div id="main-app" class="hidden" style="flex:1; display:flex; flex-direction:column;">
-
         <nav class="navbar navbar-dark sticky-top">
             <div class="container d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-3">
                     <div class="navbar-brand d-flex align-items-center gap-2 m-0">
-                        <img src="NEBULO_21-removebg-preview.png" alt="Logo Icon" height="50">
-                        <img src="NEBULOText21-removebg-preview.png" alt="Logo Text" height="40"> 
+                        <img src="NEBULO_21-removebg-preview.png" alt="Logo Icon" height="40">
+                        <img src="NEBULOText21-removebg-preview.png" alt="Logo Text" height="35"> 
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
@@ -262,19 +268,18 @@
                     </button>
                     <div class="d-flex align-items-center px-2 py-1 rounded" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border);">
                         <i class="fas fa-user-circle me-2" style="color:var(--accent)"></i>
-                        <span id="user-email-display" style="font-size: 14px; font-weight: 500; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <span id="user-email-display" style="font-size: 12px; font-weight: 500; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                             Loading...
                         </span>
                     </div>
                     <button onclick="handleLogout()" class="btn btn-sm btn-outline-danger rounded-pill px-3" title="Logout">
-                        <i class="fas fa-sign-out-alt"></i> <span class="d-none d-md-inline">Logout</span>
+                        <i class="fas fa-sign-out-alt"></i> 
                     </button>
                 </div>
             </div>
         </nav>
 
         <div class="container mt-4 mb-5" style="flex: 1;">
-
             <div class="row g-4 mb-4">
                 <div class="col-md-6">
                     <div class="my-card h-100 d-flex align-items-center">
@@ -315,7 +320,7 @@
                         </div>
                         <div class="mt-2">
                             <button onclick="downloadCSV()" class="btn btn-sm w-100 btn-outline-primary">
-                                <i class="fas fa-file-download me-2"></i> Download Laporan Data (.CSV)
+                                <i class="fas fa-file-download me-2"></i> Download Laporan (.CSV)
                             </button>
                         </div>
                     </div>
@@ -400,7 +405,6 @@
             document.body.classList.add('light-mode');
         }
 
-        // --- NAVIGATION LOGIC ---
         function goToLogin() {
             document.getElementById('landing-page').classList.add('hidden');
             document.getElementById('login-screen').classList.remove('hidden');
@@ -416,20 +420,15 @@
                 document.getElementById('landing-page').classList.add('hidden');
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
-                
                 const emailDisplay = document.getElementById('user-email-display');
-                if(user.email) {
-                    emailDisplay.innerText = user.email;
-                } else {
-                    emailDisplay.innerText = "User"; 
-                }
+                if(user.email) { emailDisplay.innerText = user.email; } 
+                else { emailDisplay.innerText = "User"; }
                 startApp();
             } else {
                 if(!document.getElementById('main-app').classList.contains('hidden')) {
                      document.getElementById('main-app').classList.add('hidden');
                      document.getElementById('landing-page').classList.remove('hidden');
                 }
-                
                 if(document.getElementById('landing-page').classList.contains('hidden') && 
                    document.getElementById('login-screen').classList.contains('hidden')) {
                      document.getElementById('landing-page').classList.remove('hidden');
@@ -437,30 +436,93 @@
             }
         });
 
-        function handleLogin() {
+        // --- AUTHENTICATION LOGIC (Login & Register WITH SECRET CODE) ---
+        let isLoginMode = true; 
+        const SECRET_CODE = "POLINES24"; // GANTI KODE INI SESUAI KEINGINAN ANDA
+
+        function toggleAuthMode() {
+            isLoginMode = !isLoginMode;
+            const title = document.getElementById('form-title');
+            const btn = document.getElementById('btn-action');
+            const textSwitch = document.getElementById('text-switch');
+            const btnSwitch = document.getElementById('btn-switch-text');
+            const secretArea = document.getElementById('secret-code-area');
+            const errorText = document.getElementById('login-error');
+
+            errorText.classList.add('hidden');
+
+            if (isLoginMode) {
+                // Mode LOGIN
+                title.innerText = "Login Admin";
+                btn.innerText = "MASUK DASHBOARD";
+                textSwitch.innerText = "Belum punya akun?";
+                btnSwitch.innerText = "Daftar";
+                secretArea.classList.add('hidden'); // Sembunyikan kolom kode
+            } else {
+                // Mode REGISTER
+                title.innerText = "Daftar Akun Tim";
+                btn.innerText = "DAFTAR SEKARANG";
+                textSwitch.innerText = "Sudah punya akun?";
+                btnSwitch.innerText = "Login";
+                secretArea.classList.remove('hidden'); // Munculkan kolom kode
+            }
+        }
+
+        function handleAuth() {
             const email = document.getElementById('input-email').value;
             const pass = document.getElementById('input-pass').value;
             const errorText = document.getElementById('login-error');
-            const btn = document.querySelector('button[onclick="handleLogin()"]');
-            btn.innerHTML = "Memproses...";
-            btn.disabled = true;
-            auth.signInWithEmailAndPassword(email, pass)
-                .then((userCredential) => {
-                    errorText.classList.add('hidden');
-                })
-                .catch((error) => {
-                    errorText.innerText = "Gagal: " + error.message;
+            const btn = document.getElementById('btn-action');
+
+            if(!email || !pass) {
+                errorText.innerText = "Email dan Password tidak boleh kosong!";
+                errorText.classList.remove('hidden');
+                return;
+            }
+
+            // CEK KODE RAHASIA JIKA SEDANG DAFTAR
+            if (!isLoginMode) {
+                const code = document.getElementById('input-code').value;
+                if (code !== SECRET_CODE) {
+                    errorText.innerText = "Kode Akses Tim SALAH! Hubungi Ketua Tim.";
                     errorText.classList.remove('hidden');
-                    btn.innerHTML = 'MASUK DASHBOARD';
-                    btn.disabled = false;
-                });
+                    return;
+                }
+            }
+
+            btn.innerText = "Memproses...";
+            btn.disabled = true;
+
+            if (isLoginMode) {
+                // LOGIN
+                auth.signInWithEmailAndPassword(email, pass)
+                    .then((userCredential) => { errorText.classList.add('hidden'); })
+                    .catch((error) => {
+                        errorText.innerText = "Login Gagal: " + error.message;
+                        errorText.classList.remove('hidden');
+                        btn.innerText = 'MASUK DASHBOARD';
+                        btn.disabled = false;
+                    });
+            } else {
+                // REGISTER
+                auth.createUserWithEmailAndPassword(email, pass)
+                    .then((userCredential) => {
+                        errorText.classList.add('hidden');
+                        alert("Registrasi Berhasil! Selamat datang.");
+                    })
+                    .catch((error) => {
+                        errorText.innerText = "Daftar Gagal: " + error.message;
+                        errorText.classList.remove('hidden');
+                        btn.innerText = 'DAFTAR SEKARANG';
+                        btn.disabled = false;
+                    });
+            }
         }
 
         function handleLogout() {
             auth.signOut().then(() => { location.reload(); });
         }
 
-        // --- KONFIGURASI TANAMAN (SUDAH DIUBAH MENJADI LIDAH BUAYA) ---
         let plantsData = [
             { id: 1, name: 'Sereh', slot: 'w1', min: 60, desc: 'Butuh Banyak Air' },
             { id: 2, name: 'Lidah Buaya', slot: 'w2', min: 30, desc: 'Tanaman Sukulen / Hemat Air' }
