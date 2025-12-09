@@ -56,20 +56,19 @@
             overflow-x: hidden;
         }
 
-        /* --- 2. STYLE BACKGROUND WALLPAPER (Get Started & Login) --- */
+        /* --- 2. STYLE BACKGROUND WALLPAPER --- */
         .bg-wallpaper {
-            /* Menggunakan gambar alexandre debieve dengan lapisan gelap 70% */
+            /* Menggunakan gambar yang Anda upload sebelumnya */
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
                         url('alexandre-debieve1-FO7JIlwjOtU-unsplash (2).jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Agar gambar diam saat discroll */
+            background-attachment: fixed;
         }
 
         /* --- 3. STYLE LANDING PAGE --- */
         .landing-wrap {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            /* Class bg-wallpaper akan ditambahkan di sini via HTML */
             color: #ffffff;            
             z-index: 99999;
             overflow-y: auto;          
@@ -79,9 +78,8 @@
         .landing-header {
             padding: 20px;
             display: flex; justify-content: center; align-items: center; gap: 15px;
-            /* Transparan agar wallpaper terlihat */
             background: rgba(0, 0, 0, 0.3); 
-            backdrop-filter: blur(5px); /* Efek blur kaca */
+            backdrop-filter: blur(5px);
             border-bottom: 1px solid rgba(255,255,255,0.1);
             position: sticky; top: 0; z-index: 100;
         }
@@ -109,7 +107,7 @@
         .btn-get-started:hover { transform: scale(1.05); color: white; box-shadow: 0 0 40px rgba(0, 230, 118, 0.7); }
 
         .landing-info-section {
-            background-color: #121212; /* Bagian info tetap solid hitam agar tulisan terbaca */
+            background-color: #121212;
             padding: 60px 20px;
             border-top: 1px solid #333;
         }
@@ -122,14 +120,12 @@
         /* --- 4. STYLE LOGIN SCREEN --- */
         .login-wrap { 
             position: fixed; top:0; left:0; width:100%; height:100%; z-index: 8888; 
-            /* Class bg-wallpaper akan ditambahkan di sini juga */
             display: flex; align-items: center; justify-content: center; 
         }
         
-        /* Glass effect untuk kotak login agar menyatu dengan wallpaper */
         .glass-box { 
-            background: rgba(30, 30, 30, 0.85); /* Semi transparan */
-            backdrop-filter: blur(10px);        /* Blur background di belakang kotak */
+            background: rgba(30, 30, 30, 0.85);
+            backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 230, 118, 0.5); 
             padding: 40px; border-radius: 15px; width: 100%; max-width: 400px; 
             text-align: center; 
@@ -143,6 +139,8 @@
         .form-control { background-color: var(--input-bg) !important; color: var(--text) !important; border: 1px solid var(--border) !important; }
         .theme-toggle { cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 5px 12px; border-radius: 20px; font-size: 14px; }
         .navbar { background: var(--navbar-bg); border-bottom: 2px solid var(--accent); }
+        .navbar-brand { color: var(--accent) !important; font-weight: bold; font-size: 24px; }
+        
         .weather-icon { font-size: 2.5rem; margin-bottom: 10px; }
         .blink-soft { animation: blinker 2s linear infinite; }
         @keyframes blinker { 50% { opacity: 0.6; } }
@@ -462,9 +460,10 @@
             auth.signOut().then(() => { location.reload(); });
         }
 
+        // --- KONFIGURASI TANAMAN (SUDAH DIUBAH MENJADI LIDAH BUAYA) ---
         let plantsData = [
             { id: 1, name: 'Sereh', slot: 'w1', min: 60, desc: 'Butuh Banyak Air' },
-            { id: 2, name: 'Jahe', slot: 'w2', min: 30, desc: 'Hemat Air' }
+            { id: 2, name: 'Lidah Buaya', slot: 'w2', min: 30, desc: 'Tanaman Sukulen / Hemat Air' }
         ]; 
         let activePlantIndex = 0;
         let myChart = null; 
@@ -667,4 +666,3 @@
 
 </body>
 </html>
-
