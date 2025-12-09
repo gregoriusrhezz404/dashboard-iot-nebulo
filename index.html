@@ -33,7 +33,6 @@
             --navbar-bg: #000000;
         }
 
-        /* Mode Light (Hanya berlaku di Dashboard Utama) */
         body.light-mode {
             --accent: #00a152;      
             --bg: #f4f6f8;           
@@ -56,10 +55,72 @@
             overflow-x: hidden;
         }
 
-        /* --- 2. STYLE BACKGROUND WALLPAPER --- */
+        /* --- 2. PRELOADER KHUSUS (Updated Code) --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #121212; /* Background Gelap */
+            z-index: 999999; /* Paling atas */
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            transition: opacity 0.8s ease-out, visibility 0.8s;
+        }
+
+        /* HTML: <div class="loader"></div> */
+        /* Kode Animasi dari Anda (Warna disesuaikan ke Putih & Hijau) */
+        .loader {
+            width: fit-content;
+            font-size: 25px; /* Saya perbesar sedikit biar jelas */
+            font-family: monospace;
+            line-height: 1.4;
+            font-weight: bold;
+            /* Ganti #000 (hitam) jadi #fff (putih) agar terlihat di background gelap */
+            --c: no-repeat linear-gradient(#ffffff 0 0); 
+            background: var(--c),var(--c),var(--c),var(--c),var(--c),var(--c),var(--c);
+            background-size: calc(1ch + 1px) 100%;
+            border-bottom: 10px solid #0000; 
+            position: relative;
+            animation: l8-0 3s infinite linear;
+            clip-path: inset(-20px 0);
+        }
+        .loader::before {
+            content:"Loading...";
+            color: white;
+        }
+        .loader::after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 20px; /* Sesuaikan tinggi kursor */
+            background: var(--accent); /* Pakai warna Hijau Nebulo */
+            left: -10px;
+            bottom: 100%;
+            animation: l8-1 3s infinite linear;
+        }
+        @keyframes l8-0{
+            0%,12.5% {background-position: calc(0*100%/6) 0   ,calc(1*100%/6)    0,calc(2*100%/6)    0,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
+            25%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6)    0,calc(2*100%/6)    0,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
+            37.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6)    0,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
+            50%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
+            62.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
+            75%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6)    0,calc(6*100%/6) 0}
+            87.4%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 0}
+            100%     {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 40px}
+        }
+        @keyframes l8-1{
+            100% {left:115%}
+        }
+
+        /* Class untuk menghilangkan preloader */
+        .preloader-hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+
+        /* --- 3. STYLE BACKGROUND WALLPAPER --- */
         .bg-wallpaper {
             background-color: #121212;
-            /* Menggunakan Link Online Unsplash (Terkompresi) agar cepat */
             background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
                               url('alexandre-debieve1-FO7JIlwjOtU-unsplash (2).jpg');
             background-size: cover;
@@ -71,11 +132,11 @@
             .bg-wallpaper { background-attachment: fixed; }
         }
 
-        /* --- 3. STYLE LANDING PAGE --- */
+        /* --- 4. STYLE LANDING PAGE --- */
         .landing-wrap {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             color: #ffffff;            
-            z-index: 99999;
+            z-index: 10000; /* Di bawah Preloader */
             overflow-y: auto;          
             display: flex; flex-direction: column;
         }
@@ -121,7 +182,7 @@
             border-radius: 15px; padding: 25px; height: 100%;
         }
 
-        /* --- 4. STYLE LOGIN SCREEN --- */
+        /* --- 5. STYLE LOGIN SCREEN --- */
         .login-wrap { 
             position: fixed; top:0; left:0; width:100%; height:100%; z-index: 8888; 
             display: flex; align-items: center; justify-content: center; 
@@ -149,6 +210,11 @@
 </head>
 <body>
 
+    <div id="preloader">
+        <div class="loader"></div>
+        <p style="color: #666; margin-top: 30px; font-size: 0.9rem;">Menghubungkan ke Nebulo Server...</p>
+    </div>
+
     <div id="landing-page" class="landing-wrap bg-wallpaper">
         <div class="landing-header">
             <img src="NEBULO_21-removebg-preview.png" alt="Icon" height="40">
@@ -163,7 +229,7 @@
                 GET STARTED <i class="fas fa-arrow-right ms-2"></i>
             </button>
             <div class="mt-5 text-muted small animate__animated animate__fadeInUp animate__delay-1s">
-                <i class="fas fa-chevron-down"></i> Scroll ke bawah untuk Info <i class="fas fa-chevron-down"></i>
+                <i class="fas fa-chevron-down"></i> Scroll ke bawah untuk Info Tim & Mitra <i class="fas fa-chevron-down"></i>
             </div>
         </div>
 
@@ -216,7 +282,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-5 small" style="color:#666;">
-                    &copy; 2024 Nebulo IoT Project.
+                    &copy; 2024 Nebulo IoT Project. All rights reserved.
                 </div>
             </div>
         </div>
@@ -394,6 +460,15 @@
         const db = firebase.database();
         const auth = firebase.auth();
 
+        // --- PRELOADER LOGIC (SET 2.5 DETIK) ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const preloader = document.getElementById('preloader');
+                preloader.classList.add('preloader-hide');
+                setTimeout(() => { preloader.style.display = 'none'; }, 800);
+            }, 2500); // 2500ms = 2.5 detik
+        });
+
         function toggleTheme() {
             document.body.classList.toggle('light-mode');
             const isLight = document.body.classList.contains('light-mode');
@@ -436,9 +511,9 @@
             }
         });
 
-        // --- AUTHENTICATION LOGIC (Login & Register WITH SECRET CODE) ---
+        // AUTHENTICATION LOGIC
         let isLoginMode = true; 
-        const SECRET_CODE = "POLINES24"; // GANTI KODE INI SESUAI KEINGINAN ANDA
+        const SECRET_CODE = "POLINES24"; 
 
         function toggleAuthMode() {
             isLoginMode = !isLoginMode;
@@ -452,19 +527,17 @@
             errorText.classList.add('hidden');
 
             if (isLoginMode) {
-                // Mode LOGIN
                 title.innerText = "Login Admin";
                 btn.innerText = "MASUK DASHBOARD";
                 textSwitch.innerText = "Belum punya akun?";
                 btnSwitch.innerText = "Daftar";
-                secretArea.classList.add('hidden'); // Sembunyikan kolom kode
+                secretArea.classList.add('hidden'); 
             } else {
-                // Mode REGISTER
                 title.innerText = "Daftar Akun Tim";
                 btn.innerText = "DAFTAR SEKARANG";
                 textSwitch.innerText = "Sudah punya akun?";
                 btnSwitch.innerText = "Login";
-                secretArea.classList.remove('hidden'); // Munculkan kolom kode
+                secretArea.classList.remove('hidden'); 
             }
         }
 
@@ -480,7 +553,6 @@
                 return;
             }
 
-            // CEK KODE RAHASIA JIKA SEDANG DAFTAR
             if (!isLoginMode) {
                 const code = document.getElementById('input-code').value;
                 if (code !== SECRET_CODE) {
@@ -494,7 +566,6 @@
             btn.disabled = true;
 
             if (isLoginMode) {
-                // LOGIN
                 auth.signInWithEmailAndPassword(email, pass)
                     .then((userCredential) => { errorText.classList.add('hidden'); })
                     .catch((error) => {
@@ -504,7 +575,6 @@
                         btn.disabled = false;
                     });
             } else {
-                // REGISTER
                 auth.createUserWithEmailAndPassword(email, pass)
                     .then((userCredential) => {
                         errorText.classList.add('hidden');
