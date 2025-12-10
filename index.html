@@ -34,102 +34,47 @@
         }
 
         body.light-mode {
-            --accent: #00a152;      
-            --bg: #f4f6f8;           
-            --card: #ffffff;         
-            --text: #333333;         
-            --text-muted: #666666;   
-            --border: #ddd;          
-            --input-bg: #ffffff;     
-            --navbar-bg: #ffffff;
+            --accent: #00a152; --bg: #f4f6f8; --card: #ffffff; --text: #333333; --text-muted: #666666; --border: #ddd; --input-bg: #ffffff; --navbar-bg: #ffffff;
         }
 
         body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh; 
-            transition: background 0.3s, color 0.3s;
-            overflow-x: hidden;
+            background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+            transition: background 0.3s, color 0.3s; overflow-x: hidden;
         }
 
-        /* --- 2. PRELOADER SUPER HALUS (NEW DESIGN) --- */
+        /* --- 2. PRELOADER --- */
         #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000000; /* Hitam Pekat */
-            z-index: 999999;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000000; z-index: 999999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 0.8s ease-out, visibility 0.8s;
         }
-
-        /* Container Logo & Spinner */
-        .loader-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            display: flex; justify-content: center; align-items: center;
+        .loader {
+            width: fit-content; font-size: 25px; font-family: monospace; line-height: 1.4; font-weight: bold;
+            --c: no-repeat linear-gradient(#ffffff 0 0); 
+            background: var(--c),var(--c),var(--c),var(--c),var(--c),var(--c),var(--c);
+            background-size: calc(1ch + 1px) 100%; border-bottom: 10px solid #0000; 
+            position: relative; animation: l8-0 3s infinite linear; clip-path: inset(-20px 0);
         }
-
-        /* Logo Diam di Tengah */
-        .loader-logo {
-            width: 60px;
-            height: auto;
-            z-index: 2;
-            animation: pulse-soft 2s infinite ease-in-out;
+        .loader::before { content:"Loading..."; color: white; }
+        .loader::after {
+            content: ""; position: absolute; width: 10px; height: 20px; background: var(--accent); 
+            left: -10px; bottom: 100%; animation: l8-1 3s infinite linear;
         }
-
-        /* Lingkaran Luar (Putar Pelan) */
-        .ring-1 {
-            position: absolute; width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            border-top-color: var(--accent); /* Hijau */
-            border-bottom-color: var(--accent);
-            animation: spin-smooth 3s infinite cubic-bezier(0.4, 0, 0.2, 1); /* Easing halus */
-        }
-
-        /* Lingkaran Dalam (Putar Cepat Berlawanan) */
-        .ring-2 {
-            position: absolute; width: 80%; height: 80%;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            border-left-color: rgba(255, 255, 255, 0.5); /* Putih transparan */
-            border-right-color: rgba(255, 255, 255, 0.5);
-            animation: spin-reverse 1.5s infinite linear;
-        }
-
-        /* Teks Loading Berkedip Halus */
-        .loading-text {
-            margin-top: 25px;
-            font-size: 0.9rem;
-            color: #888;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            animation: blink-fade 2s infinite ease-in-out;
-        }
-
-        @keyframes spin-smooth { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        @keyframes spin-reverse { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
-        @keyframes pulse-soft { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.95); opacity: 0.8; } }
-        @keyframes blink-fade { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
-
+        @keyframes l8-0{ 0%,12.5% {background-position: calc(0*100%/6) 0,calc(1*100%/6) 0,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0} 100% {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 40px} }
+        @keyframes l8-1{ 100% {left:115%} }
         .preloader-hide { opacity: 0; visibility: hidden; }
-
 
         /* --- 3. WALLPAPER --- */
         .bg-wallpaper {
             background-color: #121212;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                              url('alexandre-debieve1-FO7JIlwjOtU-unsplash (2).jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('alexandre-debieve1-FO7JIlwjOtU-unsplash (2).jpg');
             background-size: cover; background-position: center; background-attachment: scroll; 
         }
         @media (min-width: 768px) { .bg-wallpaper { background-attachment: fixed; } }
 
-        /* --- 4. LANDING PAGE --- */
+        /* --- 4. LANDING & LOGIN --- */
         .landing-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; color: #ffffff; z-index: 10000; overflow-y: auto; display: flex; flex-direction: column; }
         .landing-header { padding: 15px 20px; display: flex; justify-content: center; align-items: center; gap: 15px; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
         .landing-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; min-height: 80vh; }
@@ -139,18 +84,25 @@
         .landing-info-section { background-color: #121212; padding: 50px 20px; border-top: 1px solid #333; }
         .info-card { background: rgba(255,255,255,0.05); border: 1px solid #333; border-radius: 15px; padding: 25px; height: 100%; }
 
-        /* --- 5. LOGIN SCREEN --- */
         .login-wrap { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 8888; display: flex; align-items: center; justify-content: center; }
+        
         .glass-box { 
-            background: rgba(18, 18, 18, 0.95); border: 1px solid rgba(0, 230, 118, 0.5); 
-            padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; 
+            background: rgba(18, 18, 18, 0.95); 
+            border: 1px solid rgba(0, 230, 118, 0.5); 
+            padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; 
+            text-align: center; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
-            animation: holographicEntry 0.8s cubic-bezier(0.23, 1, 0.32, 1); 
+            animation: holographicEntry 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            
+            /* TRANSISI TINGGI HALUS (Penting untuk efek saat kolom rahasia muncul) */
+            transition: height 0.4s ease, padding 0.4s ease;
+            overflow: hidden; /* Mencegah konten tumpah saat animasi */
         }
+        
         .glass-box:hover { animation: float 4s ease-in-out infinite; }
         @keyframes holographicEntry { 0% { transform: scale(0.5) translateY(50px); opacity: 0; filter: blur(10px); } 100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); } }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-        
+
         .form-control { background-color: var(--input-bg) !important; color: var(--text) !important; border: 1px solid var(--border) !important; transition: all 0.3s ease; }
         .form-control:focus { transform: scale(1.05); border-color: var(--accent) !important; box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); }
         .hidden { display: none !important; }
@@ -165,12 +117,8 @@
 <body>
 
     <div id="preloader">
-        <div class="loader-container">
-            <div class="ring-1"></div>
-            <div class="ring-2"></div>
-            <img src="NEBULO_21-removebg-preview.png" alt="Loading..." class="loader-logo">
-        </div>
-        <p class="loading-text">Menyiapkan Sistem...</p>
+        <div class="loader"></div>
+        <p style="color: #666; margin-top: 30px; font-size: 0.9rem;">Menghubungkan ke Nebulo Server...</p>
     </div>
 
     <div id="landing-page" class="landing-wrap bg-wallpaper">
@@ -216,18 +164,25 @@
         <div class="glass-box">
             <img src="NEBULO_21-removebg-preview.png" alt="Logo Nebulo" style="height: 100px; margin-bottom: 15px;">
             <div style="margin-bottom: 30px;"><img src="NEBULOText21-removebg-preview.png" alt="Nebulo Text" style="height: 60px; display: block; margin: 0 auto;"></div>
-            <h5 id="form-title" class="mb-4" style="color: #ffffff;">Login Admin</h5>
-            <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Masukkan Email Anda">
-            <input type="password" id="input-pass" class="form-control mb-3 text-center" placeholder="Masukkan Password">
-            <div id="secret-code-area" class="hidden">
-                <input type="text" id="input-code" class="form-control mb-3 text-center" placeholder="Kode Akses Tim" style="border-color: var(--accent);">
-                <small class="text-muted d-block mb-3">*Minta kode ke Ketua Tim</small>
+            
+            <div id="auth-box-content">
+                <h5 id="form-title" class="mb-4" style="color: #ffffff;">Login Admin</h5>
+                <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Masukkan Email Anda">
+                <input type="password" id="input-pass" class="form-control mb-3 text-center" placeholder="Masukkan Password">
+                
+                <div id="secret-code-area" class="hidden">
+                    <input type="text" id="input-code" class="form-control mb-3 text-center" placeholder="Kode Akses Tim" style="border-color: var(--accent);">
+                    <small class="text-muted d-block mb-3">*Minta kode ke Ketua Tim</small>
+                </div>
+                
+                <button id="btn-action" onclick="handleAuth()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK DASHBOARD</button>
+                
+                <div class="mt-3">
+                    <span id="text-switch" style="color: #b0b0b0; font-size: 0.9rem;">Belum punya akun?</span>
+                    <button onclick="toggleAuthMode()" class="btn btn-sm btn-link p-0 ms-1" style="color: var(--accent); text-decoration: none; font-weight: bold;"><span id="btn-switch-text">Daftar</span></button>
+                </div>
             </div>
-            <button id="btn-action" onclick="handleAuth()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK DASHBOARD</button>
-            <div class="mt-3">
-                <span id="text-switch" style="color: #b0b0b0; font-size: 0.9rem;">Belum punya akun?</span>
-                <button onclick="toggleAuthMode()" class="btn btn-sm btn-link p-0 ms-1" style="color: var(--accent); text-decoration: none; font-weight: bold;"><span id="btn-switch-text">Daftar</span></button>
-            </div>
+
             <button onclick="backToHome()" class="btn btn-sm btn-link mt-3" style="color: #cccccc; text-decoration: none;">&larr; Kembali</button>
             <p id="login-error" class="text-danger mt-3 small hidden">Gagal!</p>
         </div>
@@ -384,21 +339,37 @@
         let isLoginMode = true; 
         const SECRET_CODE = "POLINES24"; 
 
+        // --- ANIMASI TRANSISI LOGIN <-> REGISTER ---
         function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            const title = document.getElementById('form-title');
-            const btn = document.getElementById('btn-action');
-            const textSwitch = document.getElementById('text-switch');
-            const btnSwitch = document.getElementById('btn-switch-text');
-            const secretArea = document.getElementById('secret-code-area');
-            const errorText = document.getElementById('login-error');
-            errorText.classList.add('hidden');
+            const container = document.getElementById('auth-box-content');
+            
+            // 1. Animasi Keluar (Fade Out)
+            container.classList.remove('animate__fadeIn'); // Reset animasi masuk
+            container.classList.add('animate__animated', 'animate__fadeOut');
 
-            if (isLoginMode) {
-                title.innerText = "Login Admin"; btn.innerText = "MASUK DASHBOARD"; textSwitch.innerText = "Belum punya akun?"; btnSwitch.innerText = "Daftar"; secretArea.classList.add('hidden'); 
-            } else {
-                title.innerText = "Daftar Akun Tim"; btn.innerText = "DAFTAR SEKARANG"; textSwitch.innerText = "Sudah punya akun?"; btnSwitch.innerText = "Login"; secretArea.classList.remove('hidden'); 
-            }
+            // 2. Tunggu sebentar (0.5 detik) baru ganti text & mode
+            setTimeout(() => {
+                isLoginMode = !isLoginMode; // Switch logic
+                
+                const title = document.getElementById('form-title');
+                const btn = document.getElementById('btn-action');
+                const textSwitch = document.getElementById('text-switch');
+                const btnSwitch = document.getElementById('btn-switch-text');
+                const secretArea = document.getElementById('secret-code-area');
+                const errorText = document.getElementById('login-error');
+
+                errorText.classList.add('hidden');
+
+                if (isLoginMode) {
+                    title.innerText = "Login Admin"; btn.innerText = "MASUK DASHBOARD"; textSwitch.innerText = "Belum punya akun?"; btnSwitch.innerText = "Daftar"; secretArea.classList.add('hidden'); 
+                } else {
+                    title.innerText = "Daftar Akun Tim"; btn.innerText = "DAFTAR SEKARANG"; textSwitch.innerText = "Sudah punya akun?"; btnSwitch.innerText = "Login"; secretArea.classList.remove('hidden'); 
+                }
+
+                // 3. Animasi Masuk (Fade In)
+                container.classList.remove('animate__fadeOut');
+                container.classList.add('animate__fadeIn');
+            }, 500); // Waktu jeda sesuai durasi animasi animate.css
         }
 
         function handleAuth() {
