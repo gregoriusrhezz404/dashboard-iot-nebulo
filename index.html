@@ -55,26 +55,23 @@
             overflow-x: hidden;
         }
 
-        /* --- 2. PRELOADER KHUSUS (Updated Code) --- */
+        /* --- 2. PRELOADER KHUSUS --- */
         #preloader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #121212; /* Background Gelap */
-            z-index: 999999; /* Paling atas */
+            background-color: #121212;
+            z-index: 999999;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             transition: opacity 0.8s ease-out, visibility 0.8s;
         }
 
-        /* HTML: <div class="loader"></div> */
-        /* Kode Animasi dari Anda (Warna disesuaikan ke Putih & Hijau) */
         .loader {
             width: fit-content;
-            font-size: 25px; /* Saya perbesar sedikit biar jelas */
+            font-size: 25px;
             font-family: monospace;
             line-height: 1.4;
             font-weight: bold;
-            /* Ganti #000 (hitam) jadi #fff (putih) agar terlihat di background gelap */
             --c: no-repeat linear-gradient(#ffffff 0 0); 
             background: var(--c),var(--c),var(--c),var(--c),var(--c),var(--c),var(--c);
             background-size: calc(1ch + 1px) 100%;
@@ -83,64 +80,45 @@
             animation: l8-0 3s infinite linear;
             clip-path: inset(-20px 0);
         }
-        .loader::before {
-            content:"Loading...";
-            color: white;
-        }
+        .loader::before { content:"Loading..."; color: white; }
         .loader::after {
-            content: "";
-            position: absolute;
-            width: 10px;
-            height: 20px; /* Sesuaikan tinggi kursor */
-            background: var(--accent); /* Pakai warna Hijau Nebulo */
-            left: -10px;
-            bottom: 100%;
+            content: ""; position: absolute; width: 10px; height: 20px;
+            background: var(--accent); left: -10px; bottom: 100%;
             animation: l8-1 3s infinite linear;
         }
         @keyframes l8-0{
-            0%,12.5% {background-position: calc(0*100%/6) 0   ,calc(1*100%/6)    0,calc(2*100%/6)    0,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
-            25%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6)    0,calc(2*100%/6)    0,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
-            37.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6)    0,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
-            50%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6)    0,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
-            62.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6)    0,calc(5*100%/6)    0,calc(6*100%/6) 0}
-            75%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6)    0,calc(6*100%/6) 0}
+            0%,12.5% {background-position: calc(0*100%/6) 0,calc(1*100%/6) 0,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
+            25%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 0,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
+            37.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
+            50%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
+            62.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
+            75%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 0,calc(6*100%/6) 0}
             87.4%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 0}
             100%     {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 40px}
         }
-        @keyframes l8-1{
-            100% {left:115%}
-        }
-
-        /* Class untuk menghilangkan preloader */
-        .preloader-hide {
-            opacity: 0;
-            visibility: hidden;
-        }
-
+        @keyframes l8-1{ 100% {left:115%} }
+        .preloader-hide { opacity: 0; visibility: hidden; }
 
         /* --- 3. STYLE BACKGROUND WALLPAPER --- */
         .bg-wallpaper {
             background-color: #121212;
+            /* Menggunakan Link Online Unsplash (Terkompresi) agar cepat */
             background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                              url('alexandre-debieve1-FO7JIlwjOtU-unsplash (2).jpg');
+                              url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: scroll; 
         }
-
-        @media (min-width: 768px) {
-            .bg-wallpaper { background-attachment: fixed; }
-        }
+        @media (min-width: 768px) { .bg-wallpaper { background-attachment: fixed; } }
 
         /* --- 4. STYLE LANDING PAGE --- */
         .landing-wrap {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             color: #ffffff;            
-            z-index: 10000; /* Di bawah Preloader */
+            z-index: 10000;
             overflow-y: auto;          
             display: flex; flex-direction: column;
         }
-
         .landing-header {
             padding: 15px 20px;
             display: flex; justify-content: center; align-items: center; gap: 15px;
@@ -148,39 +126,23 @@
             border-bottom: 1px solid rgba(255,255,255,0.1);
             position: sticky; top: 0; z-index: 100;
         }
-
         .landing-hero {
-            flex: 1; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 40px 20px;
-            min-height: 80vh; 
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 40px 20px; min-height: 80vh; 
         }
-
         .landing-text {
             font-size: 1.2rem; line-height: 1.6; max-width: 700px; margin-bottom: 40px;
-            color: #e0e0e0; font-weight: 300;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            color: #e0e0e0; font-weight: 300; text-shadow: 0 1px 3px rgba(0,0,0,0.8);
         }
-
         .btn-get-started {
             background: #00e676; color: white; border: none;
             padding: 15px 50px; font-size: 1.2rem; font-weight: bold;
             border-radius: 50px; box-shadow: 0 4px 15px rgba(0, 230, 118, 0.4);
-            transition: transform 0.2s;
-            text-decoration: none; cursor: pointer;
+            transition: transform 0.2s; text-decoration: none; cursor: pointer;
         }
         .btn-get-started:hover { transform: scale(1.05); color: white; }
-
-        .landing-info-section {
-            background-color: #121212; 
-            padding: 50px 20px;
-            border-top: 1px solid #333;
-        }
-
-        .info-card {
-            background: rgba(255,255,255,0.05); border: 1px solid #333;
-            border-radius: 15px; padding: 25px; height: 100%;
-        }
+        .landing-info-section { background-color: #121212; padding: 50px 20px; border-top: 1px solid #333; }
+        .info-card { background: rgba(255,255,255,0.05); border: 1px solid #333; border-radius: 15px; padding: 25px; height: 100%; }
 
         /* --- 5. STYLE LOGIN SCREEN --- */
         .login-wrap { 
@@ -194,13 +156,36 @@
             padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; 
             text-align: center; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            
+            /* ANIMASI LOGIN */
+            animation: holographicEntry 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-box:hover { animation: float 4s ease-in-out infinite; }
+
+        @keyframes holographicEntry {
+            0% { transform: scale(0.5) translateY(50px); opacity: 0; filter: blur(10px); }
+            100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+            50% { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 230, 118, 0.2); }
+            100% { transform: translateY(0px); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+        }
+
+        .form-control {
+            background-color: var(--input-bg) !important; color: var(--text) !important;
+            border: 1px solid var(--border) !important;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            transform: scale(1.05); border-color: var(--accent) !important;
+            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); 
         }
 
         .hidden { display: none !important; }
 
         /* Dashboard Styles */
         .my-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; color: var(--text); }
-        .form-control { background-color: var(--input-bg) !important; color: var(--text) !important; border: 1px solid var(--border) !important; }
         .theme-toggle { cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 5px 12px; border-radius: 20px; font-size: 14px; }
         .navbar { background: var(--navbar-bg); border-bottom: 2px solid var(--accent); }
         .weather-icon { font-size: 2.5rem; margin-bottom: 10px; }
@@ -289,7 +274,7 @@
     </div>
 
     <div id="login-screen" class="login-wrap bg-wallpaper hidden">
-        <div class="glass-box animate__animated animate__zoomIn">
+        <div class="glass-box">
             <img src="NEBULO_21-removebg-preview.png" alt="Logo Nebulo" style="height: 100px; margin-bottom: 15px;">
             <div style="margin-bottom: 30px;">
                 <img src="NEBULOText21-removebg-preview.png" alt="Nebulo Text" style="height: 60px; display: block; margin: 0 auto;">
@@ -460,13 +445,13 @@
         const db = firebase.database();
         const auth = firebase.auth();
 
-        // --- PRELOADER LOGIC (SET 2.5 DETIK) ---
+        // --- PRELOADER LOGIC ---
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
                 preloader.classList.add('preloader-hide');
                 setTimeout(() => { preloader.style.display = 'none'; }, 800);
-            }, 2500); // 2500ms = 2.5 detik
+            }, 2500);
         });
 
         function toggleTheme() {
@@ -593,8 +578,9 @@
             auth.signOut().then(() => { location.reload(); });
         }
 
+        // --- DATA TANAMAN (UPDATED: TEMULAWAK) ---
         let plantsData = [
-            { id: 1, name: 'Sereh', slot: 'w1', min: 60, desc: 'Butuh Banyak Air' },
+            { id: 1, name: 'Temulawak', slot: 'w1', min: 60, desc: 'Tanaman Rimpang / Butuh Air Sedang' },
             { id: 2, name: 'Lidah Buaya', slot: 'w2', min: 30, desc: 'Tanaman Sukulen / Hemat Air' }
         ]; 
         let activePlantIndex = 0;
