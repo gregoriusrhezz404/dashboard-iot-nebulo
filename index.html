@@ -34,163 +34,71 @@
         }
 
         body.light-mode {
-            --accent: #00a152;      
-            --bg: #f4f6f8;           
-            --card: #ffffff;         
-            --text: #333333;         
-            --text-muted: #666666;   
-            --border: #ddd;          
-            --input-bg: #ffffff;     
-            --navbar-bg: #ffffff;
+            --accent: #00a152; --bg: #f4f6f8; --card: #ffffff; --text: #333333; --text-muted: #666666; --border: #ddd; --input-bg: #ffffff; --navbar-bg: #ffffff;
         }
 
         body { 
-            background: var(--bg); 
-            color: var(--text); 
-            font-family: 'Segoe UI', sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh; 
-            transition: background 0.3s, color 0.3s;
-            overflow-x: hidden;
+            background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+            transition: background 0.3s, color 0.3s; overflow-x: hidden;
         }
 
-        /* --- 2. PRELOADER KHUSUS --- */
+        /* --- PRELOADER --- */
         #preloader {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #121212;
-            z-index: 999999;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #121212; z-index: 999999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             transition: opacity 0.8s ease-out, visibility 0.8s;
         }
-
         .loader {
-            width: fit-content;
-            font-size: 25px;
-            font-family: monospace;
-            line-height: 1.4;
-            font-weight: bold;
+            width: fit-content; font-size: 25px; font-family: monospace; line-height: 1.4; font-weight: bold;
             --c: no-repeat linear-gradient(#ffffff 0 0); 
             background: var(--c),var(--c),var(--c),var(--c),var(--c),var(--c),var(--c);
-            background-size: calc(1ch + 1px) 100%;
-            border-bottom: 10px solid #0000; 
-            position: relative;
-            animation: l8-0 3s infinite linear;
-            clip-path: inset(-20px 0);
+            background-size: calc(1ch + 1px) 100%; border-bottom: 10px solid #0000; 
+            position: relative; animation: l8-0 3s infinite linear; clip-path: inset(-20px 0);
         }
         .loader::before { content:"Loading..."; color: white; }
         .loader::after {
-            content: ""; position: absolute; width: 10px; height: 20px;
-            background: var(--accent); left: -10px; bottom: 100%;
-            animation: l8-1 3s infinite linear;
+            content: ""; position: absolute; width: 10px; height: 20px; background: var(--accent); 
+            left: -10px; bottom: 100%; animation: l8-1 3s infinite linear;
         }
-        @keyframes l8-0{
-            0%,12.5% {background-position: calc(0*100%/6) 0,calc(1*100%/6) 0,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
-            25%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 0,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
-            37.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
-            50%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
-            62.5%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0}
-            75%      {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 0,calc(6*100%/6) 0}
-            87.4%    {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 0}
-            100%     {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 40px}
-        }
+        @keyframes l8-0{ 0%,12.5% {background-position: calc(0*100%/6) 0,calc(1*100%/6) 0,calc(2*100%/6) 0,calc(3*100%/6) 0,calc(4*100%/6) 0,calc(5*100%/6) 0,calc(6*100%/6) 0} 100% {background-position: calc(0*100%/6) 40px,calc(1*100%/6) 40px,calc(2*100%/6) 40px,calc(3*100%/6) 40px,calc(4*100%/6) 40px,calc(5*100%/6) 40px,calc(6*100%/6) 40px} }
         @keyframes l8-1{ 100% {left:115%} }
         .preloader-hide { opacity: 0; visibility: hidden; }
 
-        /* --- 3. STYLE BACKGROUND WALLPAPER --- */
+        /* --- WALLPAPER --- */
         .bg-wallpaper {
             background-color: #121212;
-            /* Menggunakan Link Online Unsplash (Terkompresi) agar cepat */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                              url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: scroll; 
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1920&auto=format&fit=crop');
+            background-size: cover; background-position: center; background-attachment: scroll; 
         }
         @media (min-width: 768px) { .bg-wallpaper { background-attachment: fixed; } }
 
-        /* --- 4. STYLE LANDING PAGE --- */
-        .landing-wrap {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            color: #ffffff;            
-            z-index: 10000;
-            overflow-y: auto;          
-            display: flex; flex-direction: column;
-        }
-        .landing-header {
-            padding: 15px 20px;
-            display: flex; justify-content: center; align-items: center; gap: 15px;
-            background: rgba(0, 0, 0, 0.9); 
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            position: sticky; top: 0; z-index: 100;
-        }
-        .landing-hero {
-            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 40px 20px; min-height: 80vh; 
-        }
-        .landing-text {
-            font-size: 1.2rem; line-height: 1.6; max-width: 700px; margin-bottom: 40px;
-            color: #e0e0e0; font-weight: 300; text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-        }
-        .btn-get-started {
-            background: #00e676; color: white; border: none;
-            padding: 15px 50px; font-size: 1.2rem; font-weight: bold;
-            border-radius: 50px; box-shadow: 0 4px 15px rgba(0, 230, 118, 0.4);
-            transition: transform 0.2s; text-decoration: none; cursor: pointer;
-        }
+        /* --- LANDING & LOGIN --- */
+        .landing-wrap { position: fixed; top: 0; left: 0; width: 100%; height: 100%; color: #ffffff; z-index: 10000; overflow-y: auto; display: flex; flex-direction: column; }
+        .landing-header { padding: 15px 20px; display: flex; justify-content: center; align-items: center; gap: 15px; background: rgba(0, 0, 0, 0.9); border-bottom: 1px solid rgba(255,255,255,0.1); position: sticky; top: 0; z-index: 100; }
+        .landing-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; min-height: 80vh; }
+        .landing-text { font-size: 1.2rem; line-height: 1.6; max-width: 700px; margin-bottom: 40px; color: #e0e0e0; font-weight: 300; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+        .btn-get-started { background: #00e676; color: white; border: none; padding: 15px 50px; font-size: 1.2rem; font-weight: bold; border-radius: 50px; box-shadow: 0 4px 15px rgba(0, 230, 118, 0.4); transition: transform 0.2s; text-decoration: none; cursor: pointer; }
         .btn-get-started:hover { transform: scale(1.05); color: white; }
         .landing-info-section { background-color: #121212; padding: 50px 20px; border-top: 1px solid #333; }
         .info-card { background: rgba(255,255,255,0.05); border: 1px solid #333; border-radius: 15px; padding: 25px; height: 100%; }
 
-        /* --- 5. STYLE LOGIN SCREEN --- */
-        .login-wrap { 
-            position: fixed; top:0; left:0; width:100%; height:100%; z-index: 8888; 
-            display: flex; align-items: center; justify-content: center; 
-        }
-        
-        .glass-box { 
-            background: rgba(18, 18, 18, 0.95);
-            border: 1px solid rgba(0, 230, 118, 0.5); 
-            padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; 
-            text-align: center; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-            
-            /* ANIMASI LOGIN */
-            animation: holographicEntry 0.8s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+        .login-wrap { position: fixed; top:0; left:0; width:100%; height:100%; z-index: 8888; display: flex; align-items: center; justify-content: center; }
+        .glass-box { background: rgba(18, 18, 18, 0.95); border: 1px solid rgba(0, 230, 118, 0.5); padding: 30px; border-radius: 15px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.6); animation: holographicEntry 0.8s cubic-bezier(0.23, 1, 0.32, 1); }
         .glass-box:hover { animation: float 4s ease-in-out infinite; }
+        @keyframes holographicEntry { 0% { transform: scale(0.5) translateY(50px); opacity: 0; filter: blur(10px); } 100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
 
-        @keyframes holographicEntry {
-            0% { transform: scale(0.5) translateY(50px); opacity: 0; filter: blur(10px); }
-            100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); }
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
-            50% { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 230, 118, 0.2); }
-            100% { transform: translateY(0px); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
-        }
-
-        .form-control {
-            background-color: var(--input-bg) !important; color: var(--text) !important;
-            border: 1px solid var(--border) !important;
-            transition: all 0.3s ease;
-        }
-        .form-control:focus {
-            transform: scale(1.05); border-color: var(--accent) !important;
-            box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); 
-        }
-
+        .form-control { background-color: var(--input-bg) !important; color: var(--text) !important; border: 1px solid var(--border) !important; transition: all 0.3s ease; }
+        .form-control:focus { transform: scale(1.05); border-color: var(--accent) !important; box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); }
         .hidden { display: none !important; }
 
-        /* Dashboard Styles */
+        /* Dashboard */
         .my-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; color: var(--text); }
         .theme-toggle { cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 5px 12px; border-radius: 20px; font-size: 14px; }
         .navbar { background: var(--navbar-bg); border-bottom: 2px solid var(--accent); }
         .weather-icon { font-size: 2.5rem; margin-bottom: 10px; }
-        .blink-soft { animation: blinker 2s linear infinite; }
-        @keyframes blinker { 50% { opacity: 0.6; } }
     </style>
 </head>
 <body>
@@ -205,70 +113,36 @@
             <img src="NEBULO_21-removebg-preview.png" alt="Icon" height="40">
             <img src="NEBULOText21-removebg-preview.png" alt="Text" height="35">
         </div>
-
         <div class="landing-hero animate__animated animate__fadeIn">
-            <p class="landing-text">
-                Klik “Get Started” untuk memonitor kelembapan tanah, cuaca, dan mengontrol irigasi tanaman TOGA Anda dari mana saja secara real-time.
-            </p>
-            <button onclick="goToLogin()" class="btn-get-started animate__animated animate__pulse animate__infinite">
-                GET STARTED <i class="fas fa-arrow-right ms-2"></i>
-            </button>
-            <div class="mt-5 text-muted small animate__animated animate__fadeInUp animate__delay-1s">
-                <i class="fas fa-chevron-down"></i> Scroll ke bawah untuk Info Tim & Mitra <i class="fas fa-chevron-down"></i>
-            </div>
+            <p class="landing-text">Klik “Get Started” untuk memonitor kelembapan tanah, cuaca, dan mengontrol irigasi tanaman TOGA Anda dari mana saja secara real-time.</p>
+            <button onclick="goToLogin()" class="btn-get-started animate__animated animate__pulse animate__infinite">GET STARTED <i class="fas fa-arrow-right ms-2"></i></button>
+            <div class="mt-5 text-muted small animate__animated animate__fadeInUp animate__delay-1s"><i class="fas fa-chevron-down"></i> Scroll ke bawah untuk Info <i class="fas fa-chevron-down"></i></div>
         </div>
-
         <div class="landing-info-section">
             <div class="container">
                 <div class="row g-4">
                     <div class="col-md-6">
                         <div class="info-card">
-                            <h4 style="color: #00e676; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px;">
-                                <i class="fas fa-users me-2"></i>Tim Pengembang
-                            </h4>
+                            <h4 style="color: #00e676; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px;"><i class="fas fa-users me-2"></i>Tim Pengembang</h4>
                             <ul style="list-style: none; padding: 0;">
-                                <li class="mb-3">
-                                    <div class="fw-bold" style="color:white;">Gregorius Rheza Eka Kurniawan</div>
-                                    <div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.10</div>
-                                </li>
-                                <li class="mb-3">
-                                    <div class="fw-bold" style="color:white;">Salsabila</div>
-                                    <div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.20</div>
-                                </li>
-                                <li class="mb-3">
-                                    <div class="fw-bold" style="color:white;">Sri Whyuni</div>
-                                    <div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.21</div>
-                                </li>
+                                <li class="mb-3"><div class="fw-bold" style="color:white;">Gregorius Rheza Eka Kurniawan</div><div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.10</div></li>
+                                <li class="mb-3"><div class="fw-bold" style="color:white;">Salsabila</div><div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.20</div></li>
+                                <li class="mb-3"><div class="fw-bold" style="color:white;">Sri Whyuni</div><div class="small" style="color:#b0b0b0;">N.I.M 4.31.23.3.21</div></li>
                             </ul>
-                            <p class="small mt-3 pt-3 border-top border-secondary" style="color:#b0b0b0; text-align: justify;">
-                                Sistem Irigasi Presisi Tanaman TOGA Berbasis IoT dengan Algoritma Adaptive-Climate dan Web Monitoring Real-Time.
-                            </p>
+                            <p class="small mt-3 pt-3 border-top border-secondary" style="color:#b0b0b0; text-align: justify;">Sistem Irigasi Presisi Tanaman TOGA Berbasis IoT dengan Algoritma Adaptive-Climate dan Web Monitoring Real-Time.</p>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="info-card text-center d-flex flex-column justify-content-center align-items-center">
-                            <h4 style="color: #00e676; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; width:100%;">
-                                <i class="fas fa-handshake me-2"></i>Mitra Pengembang
-                            </h4>
+                            <h4 style="color: #00e676; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; width:100%;"><i class="fas fa-handshake me-2"></i>Mitra Pengembang</h4>
                             <img src="https://web.polines.ac.id/wp-content/uploads/2022/01/Logo-Polines-96dpi-200px.png" alt="Logo Polines" style="height: 80px; margin-bottom: 20px;">
                             <h5 class="fw-bold" style="color:white;">Politeknik Negeri Semarang</h5>
-                            <div class="mt-4">
-                                <a href="mailto:sekretariat@polines.ac.id" style="text-decoration: none; color: #00e676; font-size:1.1rem;">
-                                    <i class="fas fa-envelope me-2"></i> sekretariat@polines.ac.id
-                                </a>
-                            </div>
-                            <div class="mt-3">
-                                <a href="https://web.polines.ac.id/id/" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-4">
-                                    <i class="fas fa-globe me-2"></i> Kunjungi Website
-                                </a>
-                            </div>
+                            <div class="mt-4"><a href="mailto:sekretariat@polines.ac.id" style="text-decoration: none; color: #00e676; font-size:1.1rem;"><i class="fas fa-envelope me-2"></i> sekretariat@polines.ac.id</a></div>
+                            <div class="mt-3"><a href="https://web.polines.ac.id/id/" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-4"><i class="fas fa-globe me-2"></i> Kunjungi Website</a></div>
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-5 small" style="color:#666;">
-                    &copy; 2024 Nebulo IoT Project. All rights reserved.
-                </div>
+                <div class="text-center mt-5 small" style="color:#666;">&copy; 2024 Nebulo IoT Project.</div>
             </div>
         </div>
     </div>
@@ -276,29 +150,19 @@
     <div id="login-screen" class="login-wrap bg-wallpaper hidden">
         <div class="glass-box">
             <img src="NEBULO_21-removebg-preview.png" alt="Logo Nebulo" style="height: 100px; margin-bottom: 15px;">
-            <div style="margin-bottom: 30px;">
-                <img src="NEBULOText21-removebg-preview.png" alt="Nebulo Text" style="height: 60px; display: block; margin: 0 auto;">
-            </div>
-            
+            <div style="margin-bottom: 30px;"><img src="NEBULOText21-removebg-preview.png" alt="Nebulo Text" style="height: 60px; display: block; margin: 0 auto;"></div>
             <h5 id="form-title" class="mb-4" style="color: #ffffff;">Login Admin</h5>
-
             <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Masukkan Email Anda">
             <input type="password" id="input-pass" class="form-control mb-3 text-center" placeholder="Masukkan Password">
-            
             <div id="secret-code-area" class="hidden">
                 <input type="text" id="input-code" class="form-control mb-3 text-center" placeholder="Kode Akses Tim" style="border-color: var(--accent);">
                 <small class="text-muted d-block mb-3">*Minta kode ke Ketua Tim</small>
             </div>
-            
             <button id="btn-action" onclick="handleAuth()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK DASHBOARD</button>
-            
             <div class="mt-3">
                 <span id="text-switch" style="color: #b0b0b0; font-size: 0.9rem;">Belum punya akun?</span>
-                <button onclick="toggleAuthMode()" class="btn btn-sm btn-link p-0 ms-1" style="color: var(--accent); text-decoration: none; font-weight: bold;">
-                    <span id="btn-switch-text">Daftar</span>
-                </button>
+                <button onclick="toggleAuthMode()" class="btn btn-sm btn-link p-0 ms-1" style="color: var(--accent); text-decoration: none; font-weight: bold;"><span id="btn-switch-text">Daftar</span></button>
             </div>
-
             <button onclick="backToHome()" class="btn btn-sm btn-link mt-3" style="color: #cccccc; text-decoration: none;">&larr; Kembali</button>
             <p id="login-error" class="text-danger mt-3 small hidden">Gagal!</p>
         </div>
@@ -314,18 +178,12 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                    <button onclick="toggleTheme()" class="theme-toggle" title="Ganti Mode">
-                        <i class="fas fa-adjust"></i>
-                    </button>
+                    <button onclick="toggleTheme()" class="theme-toggle" title="Ganti Mode"><i class="fas fa-adjust"></i></button>
                     <div class="d-flex align-items-center px-2 py-1 rounded" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border);">
                         <i class="fas fa-user-circle me-2" style="color:var(--accent)"></i>
-                        <span id="user-email-display" style="font-size: 12px; font-weight: 500; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                            Loading...
-                        </span>
+                        <span id="user-email-display" style="font-size: 12px; font-weight: 500; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Loading...</span>
                     </div>
-                    <button onclick="handleLogout()" class="btn btn-sm btn-outline-danger rounded-pill px-3" title="Logout">
-                        <i class="fas fa-sign-out-alt"></i> 
-                    </button>
+                    <button onclick="handleLogout()" class="btn btn-sm btn-outline-danger rounded-pill px-3" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
                 </div>
             </div>
         </nav>
@@ -335,45 +193,23 @@
                 <div class="col-md-6">
                     <div class="my-card h-100 d-flex align-items-center">
                         <div class="me-4 text-center" style="min-width: 80px;">
-                            <div id="weather-icon" class="weather-icon" style="color: #ffb300;">
-                                <i class="fas fa-sun"></i>
-                            </div>
+                            <div id="weather-icon" class="weather-icon" style="color: #ffb300;"><i class="fas fa-sun"></i></div>
                             <div id="weather-text" class="small fw-bold" style="color:var(--text-muted)">Cerah</div>
                         </div>
                         <div class="flex-grow-1">
                             <h6 style="color:var(--text)">PREDIKSI CUACA (BMP280)</h6>
-                            <div id="water-save-badge" class="badge bg-primary mb-2 hidden">
-                                <i class="fas fa-tint-slash me-1"></i> Mode Hemat Air: AKTIF
-                            </div>
                             <div class="d-flex justify-content-between align-items-end">
-                                <div>
-                                    <span class="small" style="color:var(--text-muted)">Tekanan:</span><br>
-                                    <span id="val-pressure" class="h4" style="color:var(--accent)">--</span> <span class="small">hPa</span>
-                                </div>
-                                <div class="text-end">
-                                    <span class="small" style="color:var(--text-muted)">Ketinggian:</span><br>
-                                    <span id="val-altitude" class="h5">--</span> <span class="small">mdpl</span>
-                                </div>
+                                <div><span class="small" style="color:var(--text-muted)">Tekanan:</span><br><span id="val-pressure" class="h4" style="color:var(--accent)">--</span> <span class="small">hPa</span></div>
+                                <div class="text-end"><span class="small" style="color:var(--text-muted)">Ketinggian:</span><br><span id="val-altitude" class="h5">--</span> <span class="small">mdpl</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-6">
                     <div class="my-card h-100 d-flex flex-column justify-content-center">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span style="color:var(--text-muted)"><i class="fas fa-clock me-2"></i>Terakhir Update:</span>
-                            <span id="last-update" class="fw-bold" style="color:var(--text)">--:--:--</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span style="color:var(--text-muted)"><i class="fas fa-wifi me-2"></i>Status Koneksi:</span>
-                            <span id="conn-status" class="badge bg-success">Online</span>
-                        </div>
-                        <div class="mt-2">
-                            <button onclick="downloadCSV()" class="btn btn-sm w-100 btn-outline-primary">
-                                <i class="fas fa-file-download me-2"></i> Download Laporan (.CSV)
-                            </button>
-                        </div>
+                        <div class="d-flex justify-content-between mb-2"><span style="color:var(--text-muted)"><i class="fas fa-clock me-2"></i>Terakhir Update:</span><span id="last-update" class="fw-bold" style="color:var(--text)">--:--:--</span></div>
+                        <div class="d-flex justify-content-between mb-2"><span style="color:var(--text-muted)"><i class="fas fa-wifi me-2"></i>Status Koneksi:</span><span id="conn-status" class="badge bg-success">Online</span></div>
+                        <div class="mt-2"><button onclick="downloadCSV()" class="btn btn-sm w-100 btn-outline-primary"><i class="fas fa-file-download me-2"></i> Download Laporan (.CSV)</button></div>
                     </div>
                 </div>
             </div>
@@ -404,9 +240,7 @@
 
             <div class="d-flex align-items-center mb-3">
                 <h5 class="m-0 me-3" style="color:var(--text)">Pilih Tanaman:</h5>
-                <ul class="nav nav-pills plant-nav" id="plantTabs">
-                    <li class="nav-item"><button class="nav-link active">Loading...</button></li>
-                </ul>
+                <ul class="nav nav-pills plant-nav" id="plantTabs"><li class="nav-item"><button class="nav-link active">Loading...</button></li></ul>
             </div>
 
             <div id="plantContentArea">
@@ -417,9 +251,7 @@
                 <div class="col-12">
                     <div class="wifi-container">
                         <h3>📡 Jaringan Tersedia</h3>
-                        <ul id="wifiList" class="wifi-list">
-                            <li class="loading">Menunggu data scan dari ESP32...</li>
-                        </ul>
+                        <ul id="wifiList" class="wifi-list"><li class="loading">Menunggu data scan dari ESP32...</li></ul>
                     </div>
                 </div>
             </div>
@@ -445,7 +277,6 @@
         const db = firebase.database();
         const auth = firebase.auth();
 
-        // --- PRELOADER LOGIC ---
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
@@ -459,21 +290,11 @@
             const isLight = document.body.classList.contains('light-mode');
             localStorage.setItem('nebulo_theme', isLight ? 'light' : 'dark');
         }
-
         const savedTheme = localStorage.getItem('nebulo_theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-mode');
-        }
+        if (savedTheme === 'light') { document.body.classList.add('light-mode'); }
 
-        function goToLogin() {
-            document.getElementById('landing-page').classList.add('hidden');
-            document.getElementById('login-screen').classList.remove('hidden');
-        }
-
-        function backToHome() {
-            document.getElementById('login-screen').classList.add('hidden');
-            document.getElementById('landing-page').classList.remove('hidden');
-        }
+        function goToLogin() { document.getElementById('landing-page').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); }
+        function backToHome() { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('landing-page').classList.remove('hidden'); }
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -481,8 +302,7 @@
                 document.getElementById('login-screen').classList.add('hidden');
                 document.getElementById('main-app').classList.remove('hidden');
                 const emailDisplay = document.getElementById('user-email-display');
-                if(user.email) { emailDisplay.innerText = user.email; } 
-                else { emailDisplay.innerText = "User"; }
+                if(user.email) { emailDisplay.innerText = user.email; } else { emailDisplay.innerText = "User"; }
                 startApp();
             } else {
                 if(!document.getElementById('main-app').classList.contains('hidden')) {
@@ -496,7 +316,6 @@
             }
         });
 
-        // AUTHENTICATION LOGIC
         let isLoginMode = true; 
         const SECRET_CODE = "POLINES24"; 
 
@@ -508,21 +327,12 @@
             const btnSwitch = document.getElementById('btn-switch-text');
             const secretArea = document.getElementById('secret-code-area');
             const errorText = document.getElementById('login-error');
-
             errorText.classList.add('hidden');
 
             if (isLoginMode) {
-                title.innerText = "Login Admin";
-                btn.innerText = "MASUK DASHBOARD";
-                textSwitch.innerText = "Belum punya akun?";
-                btnSwitch.innerText = "Daftar";
-                secretArea.classList.add('hidden'); 
+                title.innerText = "Login Admin"; btn.innerText = "MASUK DASHBOARD"; textSwitch.innerText = "Belum punya akun?"; btnSwitch.innerText = "Daftar"; secretArea.classList.add('hidden'); 
             } else {
-                title.innerText = "Daftar Akun Tim";
-                btn.innerText = "DAFTAR SEKARANG";
-                textSwitch.innerText = "Sudah punya akun?";
-                btnSwitch.innerText = "Login";
-                secretArea.classList.remove('hidden'); 
+                title.innerText = "Daftar Akun Tim"; btn.innerText = "DAFTAR SEKARANG"; textSwitch.innerText = "Sudah punya akun?"; btnSwitch.innerText = "Login"; secretArea.classList.remove('hidden'); 
             }
         }
 
@@ -533,88 +343,53 @@
             const btn = document.getElementById('btn-action');
 
             if(!email || !pass) {
-                errorText.innerText = "Email dan Password tidak boleh kosong!";
-                errorText.classList.remove('hidden');
-                return;
+                errorText.innerText = "Email dan Password tidak boleh kosong!"; errorText.classList.remove('hidden'); return;
             }
-
             if (!isLoginMode) {
                 const code = document.getElementById('input-code').value;
-                if (code !== SECRET_CODE) {
-                    errorText.innerText = "Kode Akses Tim SALAH! Hubungi Ketua Tim.";
-                    errorText.classList.remove('hidden');
-                    return;
-                }
+                if (code !== SECRET_CODE) { errorText.innerText = "Kode Akses Tim SALAH!"; errorText.classList.remove('hidden'); return; }
             }
-
-            btn.innerText = "Memproses...";
-            btn.disabled = true;
+            btn.innerText = "Memproses..."; btn.disabled = true;
 
             if (isLoginMode) {
-                auth.signInWithEmailAndPassword(email, pass)
-                    .then((userCredential) => { errorText.classList.add('hidden'); })
-                    .catch((error) => {
-                        errorText.innerText = "Login Gagal: " + error.message;
-                        errorText.classList.remove('hidden');
-                        btn.innerText = 'MASUK DASHBOARD';
-                        btn.disabled = false;
-                    });
+                auth.signInWithEmailAndPassword(email, pass).then((userCredential) => { errorText.classList.add('hidden'); }).catch((error) => {
+                    errorText.innerText = "Login Gagal: " + error.message; errorText.classList.remove('hidden'); btn.innerText = 'MASUK DASHBOARD'; btn.disabled = false;
+                });
             } else {
-                auth.createUserWithEmailAndPassword(email, pass)
-                    .then((userCredential) => {
-                        errorText.classList.add('hidden');
-                        alert("Registrasi Berhasil! Selamat datang.");
-                    })
-                    .catch((error) => {
-                        errorText.innerText = "Daftar Gagal: " + error.message;
-                        errorText.classList.remove('hidden');
-                        btn.innerText = 'DAFTAR SEKARANG';
-                        btn.disabled = false;
-                    });
+                auth.createUserWithEmailAndPassword(email, pass).then((userCredential) => { errorText.classList.add('hidden'); alert("Registrasi Berhasil!"); }).catch((error) => {
+                    errorText.innerText = "Daftar Gagal: " + error.message; errorText.classList.remove('hidden'); btn.innerText = 'DAFTAR SEKARANG'; btn.disabled = false;
+                });
             }
         }
 
-        function handleLogout() {
-            auth.signOut().then(() => { location.reload(); });
-        }
+        function handleLogout() { auth.signOut().then(() => { location.reload(); }); }
 
-        // --- DATA TANAMAN (UPDATED: TEMULAWAK) ---
         let plantsData = [
             { id: 1, name: 'Temulawak', slot: 'w1', min: 60, desc: 'Tanaman Rimpang / Butuh Air Sedang' },
             { id: 2, name: 'Lidah Buaya', slot: 'w2', min: 30, desc: 'Tanaman Sukulen / Hemat Air' }
         ]; 
-        let activePlantIndex = 0;
-        let myChart = null; 
-        let chartDataBuffer = []; 
+        let activePlantIndex = 0; let myChart = null; let chartDataBuffer = []; 
 
         function startApp() {
             db.ref('sensor_logs').limitToLast(1).on('value', (snap) => {
                 const data = snap.val();
                 if(data) {
-                    const key = Object.keys(data)[0];
-                    const last = data[key];
-                    
+                    const key = Object.keys(data)[0]; const last = data[key];
                     document.getElementById('val-temp').innerText = last.temp || 0;
                     document.getElementById('val-humid').innerText = last.humid || 0;
-                    
-                    const press = last.pressure || 1013; 
-                    const alt = last.altitude || 0;
+                    const press = last.pressure || 1013; const alt = last.altitude || 0;
                     document.getElementById('val-pressure').innerText = press;
                     document.getElementById('val-altitude').innerText = alt;
                     updateWeatherUI(press);
-
                     const time = new Date().toLocaleTimeString();
                     document.getElementById('last-update').innerText = time;
-
                     renderPlantContent(last);
                     setTimeout(() => { initChart(plantsData[activePlantIndex].slot); }, 100);
                 }
             });
-
             db.ref('settings').on('value', (snap) => {
                 const s = snap.val() || {};
-                const mode = s.control_mode || 'MANUAL';
-                const pump = s.pump_status || 'OFF';
+                const mode = s.control_mode || 'MANUAL'; const pump = s.pump_status || 'OFF';
                 document.getElementById('label-mode').innerText = mode;
                 document.getElementById('label-pump').innerText = pump;
                 const pumpBadge = document.getElementById('label-pump');
@@ -624,163 +399,75 @@
         }
 
         function updateWeatherUI(pressure) {
-            const icon = document.getElementById('weather-icon');
-            const text = document.getElementById('weather-text');
-            const badge = document.getElementById('water-save-badge');
-            
-            if(pressure < 1005) {
-                icon.innerHTML = '<i class="fas fa-cloud-showers-heavy"></i>';
-                icon.style.color = "#4fc3f7"; 
-                text.innerText = "Antisipasi Hujan";
-                badge.classList.remove('hidden');
-                badge.classList.add('blink-soft'); 
-            } else if (pressure >= 1005 && pressure < 1015) {
-                icon.innerHTML = '<i class="fas fa-cloud-sun"></i>';
-                icon.style.color = "#ffb300"; 
-                text.innerText = "Berawan";
-                badge.classList.add('hidden'); 
-            } else {
-                icon.innerHTML = '<i class="fas fa-sun"></i>';
-                icon.style.color = "#ffeb3b"; 
-                text.innerText = "Cerah";
-                badge.classList.add('hidden'); 
-            }
+            const icon = document.getElementById('weather-icon'); const text = document.getElementById('weather-text');
+            if(pressure < 1005) { icon.innerHTML = '<i class="fas fa-cloud-showers-heavy"></i>'; icon.style.color = "#4fc3f7"; text.innerText = "Mendung/Hujan"; } 
+            else if (pressure >= 1005 && pressure < 1015) { icon.innerHTML = '<i class="fas fa-cloud-sun"></i>'; icon.style.color = "#ffb300"; text.innerText = "Berawan"; } 
+            else { icon.innerHTML = '<i class="fas fa-sun"></i>'; icon.style.color = "#ffeb3b"; text.innerText = "Cerah"; }
         }
 
         function downloadCSV() {
-            if(chartDataBuffer.length === 0) {
-                alert("Belum ada data untuk didownload. Tunggu grafik muncul.");
-                return;
-            }
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Waktu,Kelembaban Tanah (%)\n";
-            chartDataBuffer.forEach(function(row) {
-                csvContent += row.time + "," + row.value + "\n";
-            });
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "Laporan_Nebulo_" + plantsData[activePlantIndex].name + ".csv");
-            document.body.appendChild(link);
-            link.click();
+            if(chartDataBuffer.length === 0) { alert("Belum ada data."); return; }
+            let csvContent = "data:text/csv;charset=utf-8,Waktu,Kelembaban Tanah (%)\n";
+            chartDataBuffer.forEach(function(row) { csvContent += row.time + "," + row.value + "\n"; });
+            var encodedUri = encodeURI(csvContent); var link = document.createElement("a");
+            link.setAttribute("href", encodedUri); link.setAttribute("download", "Laporan_" + plantsData[activePlantIndex].name + ".csv");
+            document.body.appendChild(link); link.click();
         }
 
         function renderTabs() {
-            const ul = document.getElementById('plantTabs');
-            ul.innerHTML = '';
+            const ul = document.getElementById('plantTabs'); ul.innerHTML = '';
             plantsData.forEach((p, index) => {
                 const activeClass = index === 0 ? 'active' : '';
                 ul.innerHTML += `<li class="nav-item"><button onclick="switchTab(${index})" class="nav-link ${activeClass}" id="btn-tab-${index}">${p.name}</button></li>`;
             });
         }
-        
         function switchTab(index) {
             activePlantIndex = index;
             document.querySelectorAll('.plant-nav .nav-link').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-tab-${index}`).classList.add('active');
             db.ref('sensor_logs').limitToLast(1).once('value').then(snap => {
-                const data = snap.val();
-                if(data) { 
-                    const key = Object.keys(data)[0]; 
-                    renderPlantContent(data[key]); 
-                    setTimeout(() => { initChart(plantsData[index].slot); }, 100);
-                }
+                const data = snap.val(); if(data) { const key = Object.keys(data)[0]; renderPlantContent(data[key]); setTimeout(() => { initChart(plantsData[index].slot); }, 100); }
             });
         }
 
         function renderPlantContent(sensorData) {
-            const p = plantsData[activePlantIndex];
-            const val = sensorData[p.slot] || 0;
-            const status = val < p.min ? "KERING" : "AMAN";
-            const color = status === "KERING" ? "#ff4444" : "#00e676"; 
+            const p = plantsData[activePlantIndex]; const val = sensorData[p.slot] || 0;
+            const status = val < p.min ? "KERING" : "AMAN"; const color = status === "KERING" ? "#ff4444" : "#00e676"; 
+            let tips = status === "KERING" ? "⚠️ <b>PERINGATAN:</b> Tanah kering! Pompa akan menyala otomatis." : "✅ <b>OPTIMAL:</b> Kondisi tanah bagus.";
             
-            const pressure = sensorData.pressure || 1013;
-            let tips = "";
-            if (pressure < 1005) {
-                tips = "🌧️ <b>ANTISIPASI HUJAN:</b> Tekanan udara rendah. Sistem mengaktifkan <b>Mode Hemat Air</b>. Penyiraman ditunda sementara.";
-            } else if (status === "KERING") {
-                tips = "⚠️ <b>PERINGATAN:</b> Tanah kering! Pompa akan menyala otomatis jika mode AUTO aktif.";
-            } else {
-                tips = "✅ <b>OPTIMAL:</b> Kondisi tanah bagus. Tidak perlu penyiraman saat ini.";
-            }
-
             const html = `
                 <div class="row g-4 fade-in">
                     <div class="col-md-4">
                         <div class="my-card">
-                            <h4 style="color:var(--accent)">${p.name}</h4>
-                            <p class="small mb-3" style="color:var(--text-muted)">${p.desc}</p>
-                            <div class="text-center py-2 border-bottom border-secondary">
-                                <div style="font-size: 4rem; font-weight: bold; color: ${color}">${val}%</div>
-                                <div class="badge bg-secondary mt-1">Batas Kering: < ${p.min}%</div>
-                            </div>
-                            <div class="mt-3"><h6 class="text-info mb-2">STATUS: <b>${status}</b></h6></div>
-                            <div class="alert mt-2 p-2 small" style="background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border);">
-                                ${tips}
-                            </div>
+                            <h4 style="color:var(--accent)">${p.name}</h4><p class="small mb-3" style="color:var(--text-muted)">${p.desc}</p>
+                            <div class="text-center py-2 border-bottom border-secondary"><div style="font-size: 4rem; font-weight: bold; color: ${color}">${val}%</div><div class="badge bg-secondary mt-1">Batas Kering: < ${p.min}%</div></div>
+                            <div class="mt-3"><h6 class="text-info mb-2">STATUS: <b>${status}</b></h6></div><div class="alert mt-2 p-2 small" style="background: rgba(255,255,255,0.05); color: var(--text-muted); border: 1px solid var(--border);">${tips}</div>
                         </div>
                     </div>
-                    <div class="col-md-8">
-                        <div class="my-card">
-                            <h5 class="mb-3" style="color:var(--text-muted)">Grafik Real-time (${p.name})</h5>
-                            <div style="height: 320px;"><canvas id="mainChart"></canvas></div>
-                        </div>
-                    </div>
+                    <div class="col-md-8"><div class="my-card"><h5 class="mb-3" style="color:var(--text-muted)">Grafik Real-time (${p.name})</h5><div style="height: 320px;"><canvas id="mainChart"></canvas></div></div></div>
                 </div>
             `;
             document.getElementById('plantContentArea').innerHTML = html;
         }
 
-        function setMode(mode) { db.ref('settings').update({ control_mode: mode }); }
-        function setPump(status) { db.ref('settings').update({ control_mode: 'MANUAL', pump_status: status }); }
-
         function initChart(slotKey) {
-            const ctx = document.getElementById('mainChart');
-            if(!ctx) return;
-            if(myChart) { myChart.destroy(); }
+            const ctx = document.getElementById('mainChart'); if(!ctx) return; if(myChart) { myChart.destroy(); }
             db.ref('sensor_logs').limitToLast(20).once('value', (snap) => {
-                const raw = snap.val();
-                if(!raw) return;
-                const labels = []; const dataPoints = [];
-                chartDataBuffer = []; 
-
+                const raw = snap.val(); if(!raw) return;
+                const labels = []; const dataPoints = []; chartDataBuffer = []; 
                 Object.keys(raw).forEach(k => {
-                    const r = raw[k]; 
-                    let timeLabel = r.timestamp ? r.timestamp.substring(11, 16) : "now"; 
-                    labels.push(timeLabel); 
-                    dataPoints.push(r[slotKey]);
-                    chartDataBuffer.push({time: timeLabel, value: r[slotKey]});
+                    const r = raw[k]; let timeLabel = r.timestamp ? r.timestamp.substring(11, 16) : "now"; 
+                    labels.push(timeLabel); dataPoints.push(r[slotKey]); chartDataBuffer.push({time: timeLabel, value: r[slotKey]});
                 });
-
-                const styles = getComputedStyle(document.body);
-                const accentColor = styles.getPropertyValue('--accent').trim();
-                const gridColor = styles.getPropertyValue('--border').trim();
-
+                const styles = getComputedStyle(document.body); const accentColor = styles.getPropertyValue('--accent').trim(); const gridColor = styles.getPropertyValue('--border').trim();
                 myChart = new Chart(ctx, {
                     type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{ 
-                            label: 'Kelembaban (%)', data: dataPoints, 
-                            borderColor: accentColor, 
-                            backgroundColor: accentColor + '20', 
-                            borderWidth: 2, fill: true, tension: 0.4 
-                        }]
-                    },
-                    options: { 
-                        responsive: true, maintainAspectRatio: false, 
-                        scales: { 
-                            y: { grid: { color: gridColor }, max: 100 }, 
-                            x: { display: false } 
-                        }, 
-                        plugins: { legend: { display: false } }, animation: false 
-                    }
+                    data: { labels: labels, datasets: [{ label: 'Kelembaban (%)', data: dataPoints, borderColor: accentColor, backgroundColor: accentColor + '20', borderWidth: 2, fill: true, tension: 0.4 }] },
+                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { grid: { color: gridColor }, max: 100 }, x: { display: false } }, plugins: { legend: { display: false } }, animation: false }
                 });
             });
         }
     </script>
-
     <script src="script.js"></script>
-
 </body>
 </html>
