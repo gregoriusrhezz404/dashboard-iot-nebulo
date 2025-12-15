@@ -19,14 +19,13 @@ db.ref('sensor').on('value', (snapshot) => {
 
 // ================= KONTROL POMPA =================
 // ESP32 membaca / menulis ke path: /kontrol
-db.ref('kontrol').on('value', (snapshot) => {
-  const kontrol = snapshot.val();
-  if (!kontrol) return;
+db.ref("sensor").on("value", (snapshot) => {
+  const data = snapshot.val();
+  if (!data) return;
 
-  document.getElementById('label-pump').innerText =
-    kontrol.pompa1 ? 'ON' : 'OFF';
+  console.log("DATA FIREBASE:", data);
 
-  document.getElementById('label-mode').innerText = 'AUTO';
-
-  console.log("Kontrol:", kontrol);
+  document.getElementById("val-temp").innerText = data.suhu;
+  document.getElementById("val-humid").innerText = data.soil1;
 });
+
