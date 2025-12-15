@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-    <link rel="stylesheet" href="style.css">
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -55,60 +53,44 @@
             overflow-x: hidden;
         }
 
-        /* --- 2. PRELOADER SUPER HALUS (NEW DESIGN) --- */
+        /* --- 2. PRELOADER SUPER HALUS --- */
         #preloader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000000; /* Hitam Pekat */
+            background-color: #000000;
             z-index: 999999;
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             transition: opacity 0.8s ease-out, visibility 0.8s;
         }
 
-        /* Container Logo & Spinner */
         .loader-container {
-            position: relative;
-            width: 120px;
-            height: 120px;
+            position: relative; width: 120px; height: 120px;
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* Logo Diam di Tengah */
         .loader-logo {
-            width: 60px;
-            height: auto;
-            z-index: 2;
+            width: 60px; height: auto; z-index: 2;
             animation: pulse-soft 2s infinite ease-in-out;
         }
 
-        /* Lingkaran Luar (Putar Pelan) */
         .ring-1 {
             position: absolute; width: 100%; height: 100%;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            border-top-color: var(--accent); /* Hijau */
-            border-bottom-color: var(--accent);
-            animation: spin-smooth 3s infinite cubic-bezier(0.4, 0, 0.2, 1); /* Easing halus */
+            border-radius: 50%; border: 2px solid transparent;
+            border-top-color: var(--accent); border-bottom-color: var(--accent);
+            animation: spin-smooth 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* Lingkaran Dalam (Putar Cepat Berlawanan) */
         .ring-2 {
             position: absolute; width: 80%; height: 80%;
-            border-radius: 50%;
-            border: 2px solid transparent;
-            border-left-color: rgba(255, 255, 255, 0.5); /* Putih transparan */
-            border-right-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%; border: 2px solid transparent;
+            border-left-color: rgba(255, 255, 255, 0.5); border-right-color: rgba(255, 255, 255, 0.5);
             animation: spin-reverse 1.5s infinite linear;
         }
 
-        /* Teks Loading Berkedip Halus */
         .loading-text {
-            margin-top: 25px;
-            font-size: 0.9rem;
-            color: #888;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin-top: 25px; font-size: 0.9rem; color: #888;
+            letter-spacing: 2px; text-transform: uppercase;
             animation: blink-fade 2s infinite ease-in-out;
         }
 
@@ -118,7 +100,6 @@
         @keyframes blink-fade { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 
         .preloader-hide { opacity: 0; visibility: hidden; }
-
 
         /* --- 3. WALLPAPER --- */
         .bg-wallpaper {
@@ -147,19 +128,29 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
             animation: holographicEntry 0.8s cubic-bezier(0.23, 1, 0.32, 1); 
         }
-        .glass-box:hover { animation: float 4s ease-in-out infinite; }
         @keyframes holographicEntry { 0% { transform: scale(0.5) translateY(50px); opacity: 0; filter: blur(10px); } 100% { transform: scale(1) translateY(0); opacity: 1; filter: blur(0); } }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
         
         .form-control { background-color: var(--input-bg) !important; color: var(--text) !important; border: 1px solid var(--border) !important; transition: all 0.3s ease; }
         .form-control:focus { transform: scale(1.05); border-color: var(--accent) !important; box-shadow: 0 0 15px rgba(0, 230, 118, 0.4); }
         .hidden { display: none !important; }
 
-        /* Dashboard */
+        /* --- 6. DASHBOARD UTILS --- */
         .my-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; color: var(--text); }
         .theme-toggle { cursor: pointer; border: 1px solid var(--border); background: var(--card); color: var(--text); padding: 5px 12px; border-radius: 20px; font-size: 14px; }
         .navbar { background: var(--navbar-bg); border-bottom: 2px solid var(--accent); }
         .weather-icon { font-size: 2.5rem; margin-bottom: 10px; }
+        
+        /* List WiFi */
+        .wifi-list { list-style: none; padding: 0; margin-top: 15px; max-height: 300px; overflow-y: auto; }
+        .wifi-item { display: flex; justify-content: space-between; align-items: center; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); padding: 12px 15px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+        .wifi-item:hover { background: rgba(0, 230, 118, 0.1); border-color: var(--accent); transform: translateX(5px); }
+        .wifi-name { font-weight: bold; color: var(--text); }
+        .wifi-signal { font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+        .signal-icon { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .signal-icon.strong { background-color: #00e676; box-shadow: 0 0 8px #00e676; }
+        .signal-icon.medium { background-color: #ffeb3b; }
+        .signal-icon.weak { background-color: #ff4444; }
+        .loading { text-align: center; color: var(--text-muted); font-style: italic; padding: 20px; }
     </style>
 </head>
 <body>
@@ -183,6 +174,7 @@
             <button onclick="goToLogin()" class="btn-get-started animate__animated animate__pulse animate__infinite">GET STARTED <i class="fas fa-arrow-right ms-2"></i></button>
             <div class="mt-5 text-muted small animate__animated animate__fadeInUp animate__delay-1s"><i class="fas fa-chevron-down"></i> Scroll ke bawah untuk Info <i class="fas fa-chevron-down"></i></div>
         </div>
+        
         <div class="landing-info-section">
             <div class="container">
                 <div class="row g-4">
@@ -202,8 +194,6 @@
                             <h4 style="color: #00e676; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px; width:100%;"><i class="fas fa-handshake me-2"></i>Mitra Pengembang</h4>
                             <img src="https://web.polines.ac.id/wp-content/uploads/2022/01/Logo-Polines-96dpi-200px.png" alt="Logo Polines" style="height: 80px; margin-bottom: 20px;">
                             <h5 class="fw-bold" style="color:white;">Politeknik Negeri Semarang</h5>
-                            <div class="mt-4"><a href="mailto:sekretariat@polines.ac.id" style="text-decoration: none; color: #00e676; font-size:1.1rem;"><i class="fas fa-envelope me-2"></i> sekretariat@polines.ac.id</a></div>
-                            <div class="mt-3"><a href="https://web.polines.ac.id/id/" target="_blank" class="btn btn-sm btn-outline-light rounded-pill px-4"><i class="fas fa-globe me-2"></i> Kunjungi Website</a></div>
                         </div>
                     </div>
                 </div>
@@ -216,19 +206,25 @@
         <div class="glass-box">
             <img src="NEBULO_21-removebg-preview.png" alt="Logo Nebulo" style="height: 100px; margin-bottom: 15px;">
             <div style="margin-bottom: 30px;"><img src="NEBULOText21-removebg-preview.png" alt="Nebulo Text" style="height: 60px; display: block; margin: 0 auto;"></div>
+            
             <h5 id="form-title" class="mb-4" style="color: #ffffff;">Login Admin</h5>
+            
             <input type="email" id="input-email" class="form-control mb-3 text-center" placeholder="Masukkan Email Anda">
             <input type="password" id="input-pass" class="form-control mb-3 text-center" placeholder="Masukkan Password">
+            
             <div id="secret-code-area" class="hidden">
                 <input type="text" id="input-code" class="form-control mb-3 text-center" placeholder="Kode Akses Tim" style="border-color: var(--accent);">
                 <small class="text-muted d-block mb-3">*Minta kode ke Ketua Tim</small>
             </div>
+            
             <button id="btn-action" onclick="handleAuth()" class="btn btn-success w-100 fw-bold" style="background:var(--accent); color: white; border:none;">MASUK DASHBOARD</button>
+            
             <div class="mt-3">
                 <span id="text-switch" style="color: #b0b0b0; font-size: 0.9rem;">Belum punya akun?</span>
                 <button onclick="toggleAuthMode()" class="btn btn-sm btn-link p-0 ms-1" style="color: var(--accent); text-decoration: none; font-weight: bold;"><span id="btn-switch-text">Daftar</span></button>
             </div>
             <button onclick="backToHome()" class="btn btn-sm btn-link mt-3" style="color: #cccccc; text-decoration: none;">&larr; Kembali</button>
+            
             <p id="login-error" class="text-danger mt-3 small hidden">Gagal!</p>
         </div>
     </div>
@@ -262,7 +258,7 @@
                             <div id="weather-text" class="small fw-bold" style="color:var(--text-muted)">Cerah</div>
                         </div>
                         <div class="flex-grow-1">
-                            <h6 style="color:var(--text)">PREDIKSI CUACA (BMP280)</h6>
+                            <h6 style="color:var(--text)">LINGKUNGAN (BMP280)</h6>
                             <div class="d-flex justify-content-between align-items-end">
                                 <div><span class="small" style="color:var(--text-muted)">Tekanan:</span><br><span id="val-pressure" class="h4" style="color:var(--accent)">--</span> <span class="small">hPa</span></div>
                                 <div class="text-end"><span class="small" style="color:var(--text-muted)">Ketinggian:</span><br><span id="val-altitude" class="h5">--</span> <span class="small">mdpl</span></div>
@@ -311,15 +307,18 @@
             <div id="plantContentArea">
                 <div class="my-card text-center" style="color:var(--text-muted)">Menunggu data dari Firebase...</div>
             </div>
-
+            
             <div class="row mt-4">
                 <div class="col-12">
-                    <div class="wifi-container">
-                        <h3>📡 Jaringan Tersedia</h3>
-                        <ul id="wifiList" class="wifi-list"><li class="loading">Menunggu data scan dari ESP32...</li></ul>
+                    <div class="my-card">
+                        <h5><i class="fas fa-wifi me-2"></i>Jaringan WiFi Terdeteksi</h5>
+                        <ul id="wifiList" class="wifi-list">
+                            <li class="loading">Menunggu data scan dari ESP32...</li>
+                        </ul>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="main-footer" style="background:var(--navbar-bg); padding:20px; text-align:center; border-top:1px solid var(--border);">
@@ -328,8 +327,10 @@
     </div>
 
     <script>
+        // --- 1. KONFIGURASI FIREBASE ---
+        // PENTING: Ganti dengan Config milikmu sendiri!
         const firebaseConfig = {
-          apiKey: "AIzaSyAlpvH2xthL3jYVvP9xO7UVDMo9T-Cahyc",
+          apiKey: "AIzaSyAlpvH2xthL3jYVvP9xO7UVDMo9T-Cahyc", 
           authDomain: "nebulo-iot.firebaseapp.com",
           databaseURL: "https://nebulo-iot-default-rtdb.asia-southeast1.firebasedatabase.app",
           projectId: "nebulo-iot",
@@ -342,6 +343,7 @@
         const db = firebase.database();
         const auth = firebase.auth();
 
+        // --- 2. PRELOADER & THEME ---
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const preloader = document.getElementById('preloader');
@@ -358,9 +360,11 @@
         const savedTheme = localStorage.getItem('nebulo_theme');
         if (savedTheme === 'light') { document.body.classList.add('light-mode'); }
 
+        // --- 3. NAVIGASI HALAMAN (Login vs Landing vs Dashboard) ---
         function goToLogin() { document.getElementById('landing-page').classList.add('hidden'); document.getElementById('login-screen').classList.remove('hidden'); }
         function backToHome() { document.getElementById('login-screen').classList.add('hidden'); document.getElementById('landing-page').classList.remove('hidden'); }
 
+        // Cek Status Login
         auth.onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById('landing-page').classList.add('hidden');
@@ -374,13 +378,10 @@
                      document.getElementById('main-app').classList.add('hidden');
                      document.getElementById('landing-page').classList.remove('hidden');
                 }
-                if(document.getElementById('landing-page').classList.contains('hidden') && 
-                   document.getElementById('login-screen').classList.contains('hidden')) {
-                     document.getElementById('landing-page').classList.remove('hidden');
-                }
             }
         });
 
+        // --- 4. LOGIKA AUTH (LOGIN / REGISTER) ---
         let isLoginMode = true; 
         const SECRET_CODE = "POLINES24"; 
 
@@ -429,6 +430,7 @@
 
         function handleLogout() { auth.signOut().then(() => { location.reload(); }); }
 
+        // --- 5. LOGIKA DASHBOARD UTAMA ---
         let plantsData = [
             { id: 1, name: 'Temulawak', slot: 'w1', min: 60, desc: 'Tanaman Rimpang / Butuh Air Sedang' },
             { id: 2, name: 'Lidah Buaya', slot: 'w2', min: 30, desc: 'Tanaman Sukulen / Hemat Air' }
@@ -436,31 +438,59 @@
         let activePlantIndex = 0; let myChart = null; let chartDataBuffer = []; 
 
         function startApp() {
-            db.ref('sensor_logs').limitToLast(1).on('value', (snap) => {
-                const data = snap.val();
-                if(data) {
-                    const key = Object.keys(data)[0]; const last = data[key];
+            // Baca Data Sensor (Realtime)
+            db.ref('sensor_logs').limitToLast(1).on('child_added', (snap) => {
+                const last = snap.val();
+                if(last) {
                     document.getElementById('val-temp').innerText = last.temp || 0;
                     document.getElementById('val-humid').innerText = last.humid || 0;
                     const press = last.pressure || 1013; const alt = last.altitude || 0;
                     document.getElementById('val-pressure').innerText = press;
                     document.getElementById('val-altitude').innerText = alt;
                     updateWeatherUI(press);
+                    
                     const time = new Date().toLocaleTimeString();
                     document.getElementById('last-update').innerText = time;
+                    
+                    // Update tampilan kartu tanaman aktif
                     renderPlantContent(last);
-                    setTimeout(() => { initChart(plantsData[activePlantIndex].slot); }, 100);
+                    
+                    // Update grafik jika chart sudah ada
+                    if(myChart) {
+                        // Opsi: Panggil ulang initChart atau update data
+                        // Agar aman dan sinkron, kita refresh chart setiap data baru masuk (per 5 detik)
+                         setTimeout(() => { initChart(plantsData[activePlantIndex].slot); }, 100);
+                    }
                 }
             });
+
+            // Baca Status Pompa (Settings)
             db.ref('settings').on('value', (snap) => {
                 const s = snap.val() || {};
-                const mode = s.control_mode || 'MANUAL'; const pump = s.pump_status || 'OFF';
+                const mode = s.control_mode || 'MANUAL'; 
+                const pump1 = s.pump1_status ? 'ON' : 'OFF';
+                
                 document.getElementById('label-mode').innerText = mode;
-                document.getElementById('label-pump').innerText = pump;
+                // Kita tampilkan status pompa 1 sebagai representasi
+                document.getElementById('label-pump').innerText = pump1;
                 const pumpBadge = document.getElementById('label-pump');
-                pumpBadge.className = (pump === 'ON') ? "badge bg-success ms-1" : "badge bg-danger ms-1";
+                pumpBadge.className = (pump1 === 'ON') ? "badge bg-success ms-1" : "badge bg-danger ms-1";
             });
+
             renderTabs();
+            // Inisialisasi grafik pertama kali
+             setTimeout(() => { initChart(plantsData[0].slot); }, 1000);
+        }
+
+        function setMode(mode) {
+            db.ref('settings').update({ control_mode: mode });
+        }
+        function setPump(state) {
+            // Ubah mode ke Manual dulu agar tidak ditimpa otomatis
+            db.ref('settings').update({ control_mode: 'MANUAL' });
+            // Set kedua pompa (bisa disesuaikan jika ingin satu-satu)
+            const isO = (state === 'ON');
+            db.ref('settings').update({ pump1_status: isO, pump2_status: isO });
         }
 
         function updateWeatherUI(pressure) {
@@ -490,14 +520,24 @@
             activePlantIndex = index;
             document.querySelectorAll('.plant-nav .nav-link').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-tab-${index}`).classList.add('active');
+            
+            // Ambil data terakhir untuk update kartu
             db.ref('sensor_logs').limitToLast(1).once('value').then(snap => {
-                const data = snap.val(); if(data) { const key = Object.keys(data)[0]; renderPlantContent(data[key]); setTimeout(() => { initChart(plantsData[index].slot); }, 100); }
+                 const raw = snap.val(); 
+                 if(raw) { 
+                     // Ambil key pertama (karena limitToLast 1 menghasilkan objek dengan key unik)
+                     const k = Object.keys(raw)[0];
+                     renderPlantContent(raw[k]); 
+                 }
+                 setTimeout(() => { initChart(plantsData[index].slot); }, 100); 
             });
         }
 
         function renderPlantContent(sensorData) {
-            const p = plantsData[activePlantIndex]; const val = sensorData[p.slot] || 0;
-            const status = val < p.min ? "KERING" : "AMAN"; const color = status === "KERING" ? "#ff4444" : "#00e676"; 
+            const p = plantsData[activePlantIndex]; 
+            const val = sensorData[p.slot] || 0; // Ambil w1 atau w2
+            const status = val < p.min ? "KERING" : "AMAN"; 
+            const color = status === "KERING" ? "#ff4444" : "#00e676"; 
             let tips = status === "KERING" ? "⚠️ <b>PERINGATAN:</b> Tanah kering! Pompa akan menyala otomatis." : "✅ <b>OPTIMAL:</b> Kondisi tanah bagus.";
             
             const html = `
@@ -515,24 +555,68 @@
             document.getElementById('plantContentArea').innerHTML = html;
         }
 
+        // --- 6. PERBAIKAN GRAFIK (TIMESTAMP FIX) ---
         function initChart(slotKey) {
             const ctx = document.getElementById('mainChart'); if(!ctx) return; if(myChart) { myChart.destroy(); }
+            
             db.ref('sensor_logs').limitToLast(20).once('value', (snap) => {
-                const raw = snap.val(); if(!raw) return;
+                const raw = snap.val(); 
+                if(!raw) return;
+
                 const labels = []; const dataPoints = []; chartDataBuffer = []; 
+                
                 Object.keys(raw).forEach(k => {
-                    const r = raw[k]; let timeLabel = r.timestamp ? r.timestamp.substring(11, 16) : "now"; 
-                    labels.push(timeLabel); dataPoints.push(r[slotKey]); chartDataBuffer.push({time: timeLabel, value: r[slotKey]});
+                    const r = raw[k]; 
+                    
+                    // FIX: Deteksi apakah timestamp angka (epoch) atau string
+                    let timeLabel = "now";
+                    if (r.timestamp) {
+                        if (typeof r.timestamp === 'number') {
+                             const d = new Date(r.timestamp);
+                             timeLabel = d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0');
+                        } else if (typeof r.timestamp === 'string') {
+                             timeLabel = r.timestamp.substring(11, 16);
+                        }
+                    }
+                    
+                    labels.push(timeLabel); 
+                    dataPoints.push(r[slotKey]); 
+                    chartDataBuffer.push({time: timeLabel, value: r[slotKey]});
                 });
-                const styles = getComputedStyle(document.body); const accentColor = styles.getPropertyValue('--accent').trim(); const gridColor = styles.getPropertyValue('--border').trim();
+
+                const styles = getComputedStyle(document.body); 
+                const accentColor = styles.getPropertyValue('--accent').trim(); 
+                const gridColor = styles.getPropertyValue('--border').trim();
+                
                 myChart = new Chart(ctx, {
                     type: 'line',
-                    data: { labels: labels, datasets: [{ label: 'Kelembaban (%)', data: dataPoints, borderColor: accentColor, backgroundColor: accentColor + '20', borderWidth: 2, fill: true, tension: 0.4 }] },
-                    options: { responsive: true, maintainAspectRatio: false, scales: { y: { grid: { color: gridColor }, max: 100 }, x: { display: false } }, plugins: { legend: { display: false } }, animation: false }
+                    data: { 
+                        labels: labels, 
+                        datasets: [{ 
+                            label: 'Kelembaban (%)', 
+                            data: dataPoints, 
+                            borderColor: accentColor, 
+                            backgroundColor: accentColor + '20', 
+                            borderWidth: 2, 
+                            fill: true, 
+                            tension: 0.4 
+                        }] 
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false, 
+                        scales: { 
+                            y: { grid: { color: gridColor }, min: 0, max: 100 }, 
+                            x: { display: true, grid: { display: false } } 
+                        }, 
+                        plugins: { legend: { display: false } }, 
+                        animation: false 
+                    }
                 });
             });
         }
     </script>
+    
     <script src="script.js"></script>
 </body>
 </html>
